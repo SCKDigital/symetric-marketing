@@ -1,0 +1,76 @@
+/* Design tokens, the only place hex values are allowed to live.
+   Dark is the default (the audience is sensitive to bright screens,
+   especially in the evening). :root holds the dark values; [data-theme="light"]
+   overrides them. See BaseLayout.astro for the before-paint theme script and
+   Nav.astro for the toggle. */
+:root {
+  /* Surfaces: page background < elevated cards < recessed "artefact" panels
+     (the report panel, phone-mockup screenshots) */
+  --paper: #14161C;
+  --white: #1E212B;
+  --ink-panel: #0B0C10;
+
+  /* Text */
+  --ink: #EDEEF2;
+  --ink-2: #C3C7D4;
+  --mute: #9AA0B4;
+
+  /* Lines */
+  --rule: #33384A;
+  --dot: #363B4A;
+
+  /* On the always-dark ink-panel/phone-mockup surfaces, constant across
+     both themes since those surfaces never invert. */
+  --mute-on-dark: #8B90A0;
+  --rule-on-dark: #4A4F63;
+
+  /* Brand: brightened here for legibility as text against a dark page,
+     button-fill contrast (white text on top) isn't affected either way. */
+  --brand: #7B7EF0;
+  --brand-hover: #9294F5;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Domain colours: deliberately constant across both themes. They're used
+     at decorative scale (borders, dots, chart bars), including inside the
+     always-white "page" mockups and always-dark phone mockups, so a single
+     value that reads fine on both light and dark keeps those consistent
+     rather than needing separate light/dark variants for each context. */
+  --mood: #7C7FE8;
+  --energy: #2FBF8B;
+  --anxiety: #DD8734;
+  --concentration: #3FA9E8;
+
+  /* Fixed mockup surface: the report's "page" thumbnails are meant to read
+     as paper regardless of site theme, same reasoning as the domain colours
+     above. Named here rather than left as inline hex in global.css so the
+     mockup styling still traces back to the token block. */
+  --mockup-page-bg: #FFFFFF;
+  --mockup-page-ink: #1B1E28;
+  --mockup-page-mute: #8A90A0;
+  --mockup-page-row: #DDE0E8;
+
+  /* Type: a single serif family carries both display and body, differentiated
+     by weight (400 body, 500 emphasis, 600 UI/buttons, 700 headings) rather
+     than by a second typeface. Mono is reserved for labels/kickers only. */
+  --font-heading: "Source Serif 4", Georgia, serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+[data-theme="light"] {
+  --paper: #F0F1F5;
+  --white: #FBFBFE;
+  --ink-panel: #14161C;
+
+  --ink: #14161C;
+  --ink-2: #2B2F3C;
+  --mute: #565B6B;
+
+  --rule: #D3D6DE;
+  --dot: #C9CCD6;
+
+  --brand: #5A5DE0;
+  --brand-hover: #4A4DD2;
+}

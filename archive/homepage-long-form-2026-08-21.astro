@@ -1,0 +1,390 @@
+---
+// ARCHIVED, not a live route. This file lives outside src/pages/ on purpose,
+// so it's kept for reference but never built or served.
+//
+// This was the homepage's original long-form copy (~1,270 words, full page).
+// Replaced 2026-08-21 by a trimmed version (~840 words) after a side-by-side
+// word-count comparison against Clue/Guava/Bearable's homepages, on the read
+// that Aisha's profile (overwhelm, possible attention deficit) favours the
+// shorter version. See src/pages/index.astro for the live copy.
+//
+// To restore this version: copy this file's content back into
+// src/pages/index.astro (the relative import below is written for that
+// location, not this one).
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Static, build-time "fill" progression for the four timeline rows. No client JS.
+const TL_TOTAL = 36;
+const timeline = [
+  {
+    when: "Week 1",
+    lead: "You're just logging.",
+    rest: " Nothing to read yet, and nothing's wrong. symetric needs real data before it can say anything useful. Most tracking apps hide this part. That's usually where people quit.",
+    fill: 6,
+  },
+  {
+    when: "Week 3",
+    lead: "It knows your baseline.",
+    rest: " What normal looks like for you: a rolling median of your own history, not a population average or a clinical cut-off.",
+    fill: 14,
+  },
+  {
+    when: "Week 6",
+    lead: "It starts recognising patterns.",
+    rest: ' “<span class="domain-word" style="color:var(--anxiety)">Anxiety</span> is worse the day after poor sleep.” “Wednesdays are consistently your lowest.” Each finding shows how much data it rests on. If there isn\'t enough yet, it says so.',
+    fill: 24,
+  },
+  {
+    when: "By your next appointment",
+    lead: "You have a record.",
+    rest: " Something that makes the subjective a little more objective.",
+    fill: TL_TOTAL,
+  },
+];
+
+const RECALL_TOTAL = 32;
+const recallCompare = [
+  { label: "What makes it into the room", filled: 5 },
+  { label: "What symetric has", filled: 30 },
+];
+
+// Vitals panel: four tracked domains, a build-time sparkline each. No client JS.
+const SPARK_W = 130;
+const SPARK_H = 32;
+const vitals = [
+  { name: "Mood", color: "var(--mood)", data: [5, 6, 5, 6, 7, 6, 7, 8, 7, 8, 9, 8], value: "8.1", delta: "+0.9 this week" },
+  { name: "Energy", color: "var(--energy)", data: [4, 5, 4, 3, 4, 5, 4, 3, 4, 5, 6, 5], value: "5.4", delta: "+0.2 this week" },
+  { name: "Anxiety", color: "var(--anxiety)", data: [8, 7, 8, 9, 7, 8, 6, 7, 5, 6, 5, 4], value: "4.3", delta: "-3.1 this week" },
+  { name: "Concentration", color: "var(--concentration)", data: [5, 4, 5, 6, 5, 6, 7, 6, 8, 7, 8, 9], value: "8.6", delta: "+2.4 this week" },
+].map((row) => {
+  const min = Math.min(...row.data);
+  const max = Math.max(...row.data);
+  const range = max - min || 1;
+  const pts = row.data.map((v, i) => {
+    const x = Number(((i / (row.data.length - 1)) * SPARK_W).toFixed(1));
+    const y = Number((SPARK_H - ((v - min) / range) * SPARK_H).toFixed(1));
+    return [x, y];
+  });
+  const [lastX, lastY] = pts[pts.length - 1];
+  return { ...row, points: pts.map((p) => p.join(",")).join(" "), lastX, lastY };
+});
+const vitalsSummary = vitals.map((v) => `${v.name} ${v.value}, ${v.delta}`).join(". ");
+
+// Finding chart: one flagged moment on a single line, drawn as the evidence it claims to be.
+const FIND_W = 640;
+const FIND_H = 90;
+const FIND_TOP = 10;
+const FIND_VIEWBOX_H = FIND_TOP + FIND_H;
+const FIND_MIN = 3;
+const FIND_MAX = 10;
+const findingData = [5, 6, 6, 7, 6, 8, 9, 7, 6, 8, 7, 6, 8, 9, 7, 6];
+const findingPts = findingData.map((v, i) => {
+  const x = Number(((i / (findingData.length - 1)) * FIND_W).toFixed(1));
+  const y = Number((FIND_H - ((v - FIND_MIN) / (FIND_MAX - FIND_MIN)) * FIND_H).toFixed(1));
+  return [x, y];
+});
+const findingPoints = findingPts.map((p) => p.join(",")).join(" ");
+const FLAG_IDX = 6;
+const [flagX, flagY] = findingPts[FLAG_IDX];
+const findingCalloutLeft = Number(((flagX / FIND_W) * 100).toFixed(1));
+
+const screenshots = [
+  { label: "Insights", sub: "60-day view, a detected pattern flagged", cap: "Every finding carries its evidence." },
+  { label: "Today", sub: "The daily check-in screen", cap: "The whole daily cost of using it." },
+  { label: "Prepare", sub: "Questions drafted before an appointment", cap: "Drafted from what it actually found." },
+];
+
+const reportPages = [
+  { num: "PAGE 1", title: "Summary", c: "var(--mood)" },
+  { num: "PAGE 2", title: "Patterns & connections", c: "var(--anxiety)" },
+  { num: "PAGE 3", title: "Charts by area", c: "var(--concentration)" },
+  { num: "PAGE 4", title: "Context", c: "var(--energy)" },
+  { num: "PAGE 5", title: "Medication", c: "var(--mood)" },
+];
+---
+
+<BaseLayout
+  title="symetric: Track between visits"
+  description="Two minutes a day. In six weeks, get the whole picture for your clinician. A quiet symptom tracker for Android and iOS, AU$9.99 once, available in Australia now."
+  structuredData
+>
+  <!-- ============ HERO ============ -->
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <p class="kicker">Symptom tracking &middot; Australia &middot; Android &middot; iOS</p>
+          <h1>Fifteen minutes to describe the last three months? Nobody can do that.</h1>
+          <p class="lede">symetric keeps the record for you, thirty seconds at a time, so you walk in with something solid, not just whatever you can remember today.</p>
+          <p class="hero-scope">Mind and sleep, always on. Body and cycle, if that&rsquo;s part of your picture too.</p>
+          <p class="hero-price"><b>AU$9.99 once.</b> Track twice a day for 28 days, no use in it? <a href="/guarantee">Full refund, no questions asked</a>.</p>
+          <div class="cta-row">
+            <!-- TODO: real App Store and Google Play listing URLs not available yet -->
+            <a class="btn btn-primary" href="#">Get symetric</a>
+            <a class="btn btn-ghost" href="#report">Read a real report first</a>
+          </div>
+          <p class="hero-finer">No ads &middot; no subscription &middot; no account needed to read the sample</p>
+        </div>
+
+        <div class="hero-visual">
+          <div class="checkin-wrap">
+            <div class="checkin-head">
+              <span>90 days &middot; 4 check-ins a day</span>
+              <span>One cell for every day</span>
+            </div>
+            <div
+              id="checkin-grid"
+              role="img"
+              aria-label="A grid of 90 cells, one for each day over three months. Most are a quiet grey. A handful are coloured: the days symetric flagged something, not a count of how much was logged."
+            ></div>
+            <p class="checkin-foot">Fifteen minutes can&rsquo;t summarise all of this. <b>The coloured ones are what symetric found in it</b>: a run of low weeks, a Wednesday pattern, the day everything dropped at once.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ THE PROBLEM ============ -->
+  <div class="shell">
+    <section class="sec" aria-labelledby="problem-h">
+      <h2 id="problem-h">It isn&rsquo;t a you problem. It&rsquo;s a data problem.</h2>
+      <p class="big-quiet mt-xl muted">You answer based on the last few days, that&rsquo;s what&rsquo;s actually reachable. The rough patch back in February, the mornings you couldn&rsquo;t get going: none of it makes it into the room. <b>Your next three months get planned on incomplete information.</b> And it happens more when concentration and memory are exactly what you&rsquo;re trying to describe.</p>
+      <div class="recall-compare" aria-hidden="true">
+        {recallCompare.map((block) => (
+          <div>
+            <p class="recall-label">{block.label}</p>
+            <div class="recall-dots">
+              {Array.from({ length: RECALL_TOTAL }).map((_, i) => (
+                <i class={i < block.filled ? "filled" : ""}></i>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ WHAT IT ASKS OF YOU ============ -->
+  <div class="shell">
+    <section class="sec" aria-labelledby="asks-h">
+      <h2 id="asks-h">Two minutes a day.</h2>
+      <div class="three">
+        <div class="card" style="--c:var(--mood)">
+          <h3>You pick the areas</h3>
+          <p>A few times a day, during hours you choose, it asks how you&rsquo;re doing in the areas you picked. Thirty seconds at a time: tap, tap, done.</p>
+          <p>You choose the domains you want to track: mood, energy, anxiety, concentration, irritability, social depletion, sensory overwhelm, motivation. <b>Track two of them or all eight, and change your mind whenever you like.</b> Sleep is asked once a day, always, alongside whatever you&rsquo;ve picked.</p>
+          <p>There&rsquo;s also optional body and cycle tracking, for physical symptoms and cycle context, if you want them. <a href="/what-it-tracks">See what symetric tracks</a>.</p>
+        </div>
+        <div class="card" style="--c:var(--energy)">
+          <h3>You pick the hours</h3>
+          <p><b>Three check-ins a day is the default, inside a window you set.</b> Two is fine. There&rsquo;s a rescue window if you&rsquo;re not near your phone.</p>
+        </div>
+        <div class="card" style="--c:var(--anxiety)">
+          <h3>Missing a check-in costs nothing</h3>
+          <p>There&rsquo;s no streak to break, no flashing lights, no angry red pop-up. <b>A rough fortnight won&rsquo;t be punished</b>, and the gap itself is data worth having. Pick it back up when you can.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ FIRST SIX WEEKS TIMELINE ============ -->
+  <div class="shell" id="weeks">
+    <section class="sec pt-tight" aria-labelledby="weeks-h">
+      <h2 id="weeks-h">Week one is pretty empty. That&rsquo;s by design.</h2>
+      <div class="tl">
+        {timeline.map((row) => (
+          <div class="tl-row">
+            <div class="tl-when">{row.when}</div>
+            <div class="tl-what"><b>{row.lead}</b><Fragment set:html={row.rest} /></div>
+            <div class="tl-dots" aria-hidden="true">
+              {Array.from({ length: TL_TOTAL }).map((_, i) => (
+                <i class={i < row.fill ? "filled" : ""}></i>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ VITALS PANEL ============ -->
+  <div class="shell">
+    <section class="sec pt-tight" aria-labelledby="vitals-h">
+      <p class="sec-label">What week six actually looks like</p>
+      <h2 id="vitals-h">Four numbers, not a diagnosis.</h2>
+      <p class="mt-lg muted">A real week from a real set of check-ins: the areas someone tracked, where each sits right now, which way it's moved. Nothing here is a score to fix, just a record to bring somewhere.</p>
+      <div class="vitals" role="img" aria-label={`Four tracked areas, this week. ${vitalsSummary}.`}>
+        {vitals.map((row) => (
+          <div class="vitals-row">
+            <span class="vitals-dot" style={`background:${row.color}`} aria-hidden="true"></span>
+            <span class="vitals-name">{row.name}</span>
+            <svg class="vitals-spark" viewBox={`0 0 ${SPARK_W} ${SPARK_H}`} preserveAspectRatio="none" aria-hidden="true">
+              <polyline points={row.points} fill="none" stroke={row.color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx={row.lastX} cy={row.lastY} r="4" fill={row.color} stroke="var(--white)" stroke-width="2" />
+            </svg>
+            <span class="vitals-figure" aria-hidden="true">
+              <span class="vitals-value">{row.value}</span>
+              <span class="vitals-delta">{row.delta}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ SAMPLE REPORT ============ -->
+  <div class="shell" id="report">
+    <section class="report" aria-labelledby="report-h">
+      <p class="sec-label">The part that matters</p>
+      <h2 id="report-h">Read a real report before you install anything.</h2>
+      <p class="mt-lg">Five pages, built from six months of sample data: summary statistics, the patterns it found, a chart for every area you track, context, and what changed after each medication adjustment.</p>
+
+      <div class="finding" role="img" aria-label="Anxiety over the last eight weeks, with one finding flagged: anxiety rises the day after poor sleep, based on eight weeks of data, rated solid.">
+        <div class="finding-chart">
+          <div class="finding-callout" style={`left:${findingCalloutLeft}%`}>Anxiety rises the day after poor sleep</div>
+          <svg viewBox={`0 0 ${FIND_W} ${FIND_VIEWBOX_H}`} width="100%" aria-hidden="true">
+            <line x1="0" x2={FIND_W} y1={FIND_TOP} y2={FIND_TOP} stroke="var(--rule-on-dark)" stroke-width="1" opacity="0.5" />
+            <line x1="0" x2={FIND_W} y1={FIND_TOP + FIND_H / 2} y2={FIND_TOP + FIND_H / 2} stroke="var(--rule-on-dark)" stroke-width="1" opacity="0.5" />
+            <line x1="0" x2={FIND_W} y1={FIND_TOP + FIND_H} y2={FIND_TOP + FIND_H} stroke="var(--rule-on-dark)" stroke-width="1" opacity="0.5" />
+            <polyline points={findingPoints} fill="none" stroke="var(--anxiety)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform={`translate(0,${FIND_TOP})`} />
+            <circle cx={flagX} cy={flagY + FIND_TOP} r="6" fill="var(--anxiety)" stroke="var(--ink-panel)" stroke-width="2" />
+            <line x1={flagX} y1="0" x2={flagX} y2={flagY + FIND_TOP - 8} stroke="var(--rule-on-dark)" stroke-width="1" />
+          </svg>
+        </div>
+        <p class="finding-caption-text">Anxiety, last 8 weeks</p>
+        <div class="finding-stats">
+          <span class="finding-stat"><span class="finding-stat-value">59</span> check-ins in this window</span>
+          <span class="finding-confidence">SOLID DATA</span>
+        </div>
+      </div>
+
+      <p class="mt-sm"><b>No email address. No sign-up.</b> It&rsquo;s just a PDF.</p>
+
+      <div class="pages" aria-hidden="true">
+        {reportPages.map((p) => (
+          <div class="page" style={`--c:${p.c}`}>
+            <div class="pnum">{p.num}</div>
+            <div class="pttl">{p.title}</div>
+            <div class="prow" style="width:84%"></div>
+            <div class="prow" style="width:66%"></div>
+            <div class="pchart">
+              <i style="height:40%"></i><i style="height:65%"></i><i style="height:52%"></i><i style="height:78%"></i>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="cta-row mt-2xl">
+        <a class="btn btn-light" href="/symetric-sample-report.pdf">Download the report</a>
+        <a class="btn ui" style="color:#EDEEF2;border-color:var(--rule-on-dark)" href="/for-clinicians">For clinicians</a>
+        <span class="cta-note" style="color:var(--mute-on-dark)">PDF &middot; 5 pages</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ INSIDE THE APP ============ -->
+  <div class="shell">
+    <section class="sec" aria-labelledby="inside-h">
+      <h2 id="inside-h">Plain sentences, not p-values.</h2>
+      <div class="shots">
+        {screenshots.map((s) => (
+          <div class="shotcard">
+            <div class="shot-placeholder">
+              <svg class="shot-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <path d="M21 15l-5-5L5 21" />
+              </svg>
+              <p class="shot-placeholder-label">Real screenshot</p>
+              <p class="shot-placeholder-sub">{s.label}<br />{s.sub}</p>
+            </div>
+            <p class="shotcap">{s.cap}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ YOUR DATA ============ -->
+  <div class="shell" id="data">
+    <section class="sec" aria-labelledby="data-h">
+      <h2 id="data-h">The honest version, not the marketing one.</h2>
+      <p class="mt-lg muted">Plenty of apps say &ldquo;your data never leaves your phone&rdquo; when it isn&rsquo;t true. Here&rsquo;s exactly how symetric works.</p>
+      <div class="plain">
+        <div class="line">
+          <span class="tick yes" aria-hidden="true">✓</span>
+          <span class="txt"><b>Your check-ins are stored in your own account</b>, on an encrypted database, isolated so that no other user, and no unauthenticated request, can reach them. That&rsquo;s how they survive a lost phone.</span>
+        </div>
+        <div class="line">
+          <span class="tick yes" aria-hidden="true">✓</span>
+          <span class="txt"><b>Every pattern is calculated on your device.</b> Correlations, baselines, sleep relationships, medication effects: all of it runs in the app, on your phone.</span>
+        </div>
+        <div class="line">
+          <span class="tick no" aria-hidden="true">✕</span>
+          <span class="txt"><b>There is no AI within symetric.</b> Nothing you log is sent to a language model or any third party to be interpreted. <a href="/how-ai-was-used">Click here</a> to learn how AI was used in the creation of symetric.</span>
+        </div>
+        <div class="line">
+          <span class="tick no" aria-hidden="true">✕</span>
+          <span class="txt"><b>Nothing is sold, shared or advertised against.</b> No ads, no subscription, no data partnerships.</span>
+        </div>
+        <div class="line">
+          <span class="tick yes" aria-hidden="true">✓</span>
+          <span class="txt"><b>You can take it or delete it at any time.</b> Full export as CSV or JSON, delete any date range, or reset your baseline when your normal genuinely changes.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ WHO IT'S FOR ============ -->
+  <div class="shell" id="clinician">
+    <section class="sec pt-tight" aria-labelledby="who-h">
+      <h2 id="who-h">You don&rsquo;t need a diagnosis to use this.</h2>
+      <p class="mt-lg muted">A lot of what symetric&rsquo;s users are managing has something in common: it took years to get taken seriously, it doesn&rsquo;t show up cleanly on one test, and it rarely shows up alone.</p>
+      <p class="mt-md muted">POTS. EDS. MCAS. ME/CFS. Autism. ADHD. Anxiety and depression that don&rsquo;t respond the way they&rsquo;re &ldquo;supposed&rdquo; to. Often two or three of these at once, tangled together in ways that make it hard to tell what&rsquo;s causing what.</p>
+      <p class="mt-md muted">If any of that sounds familiar, whether you have a formal diagnosis, a working theory, or just a growing folder of appointments that haven&rsquo;t added up to an answer yet, symetric is built for you.</p>
+      <p class="mt-md muted"><b>symetric doesn&rsquo;t diagnose, and you don&rsquo;t need a diagnosis to start.</b> It helps you track what&rsquo;s actually happening, in your body and your mind, so the pattern is visible to you, and to whoever you bring it to next. Only data. Never assumptions.</p>
+      <div class="who-tags">
+        <span class="who-tag">No diagnosis needed</span>
+        <span class="who-tag">On a waiting list</span>
+        <span class="who-tag">Between clinicians</span>
+        <span class="who-tag">Told it&rsquo;s &ldquo;probably nothing&rdquo;</span>
+      </div>
+      <p class="mt-md muted">The optional body tracking also helps if joint instability, standing up feeling faint, or persistent exhaustion are part of your picture too, alongside or instead of the mind side.</p>
+      <p class="mt-md muted">If it would help to send something ahead, there&rsquo;s a short page explaining to a clinician what symetric measures, how baselines are calculated, and what the report does and doesn&rsquo;t claim.</p>
+      <div class="cta-row"><a class="btn btn-ghost" href="/for-clinicians">For clinicians</a></div>
+    </section>
+  </div>
+
+  <!-- ============ CLOSE ============ -->
+  <div class="shell">
+    <section class="close" id="get" aria-labelledby="close-h">
+      <h2 id="close-h">Next time someone asks how you&rsquo;ve been.</h2>
+      <div class="cta-row">
+        <!-- TODO: real App Store and Google Play listing URLs not available yet -->
+        <a class="btn btn-primary" href="#">Get symetric</a>
+        <a class="btn btn-ghost" href="#report">Read the sample report</a>
+      </div>
+      <p class="cta-note mt-md">Australia only for now &middot; Android and iOS &middot; AU$9.99 once, no ads, no subscription</p>
+    </section>
+  </div>
+
+  <!-- ============ WAITLIST ============ -->
+  <div class="shell" id="waitlist">
+    <section class="sec pt-tight" aria-labelledby="waitlist-h" style="text-align:center">
+      <h2 id="waitlist-h" style="margin-left:auto;margin-right:auto;max-width:20ch">Not in Australia yet?</h2>
+      <p class="mt-md muted" style="max-width:46ch;margin-left:auto;margin-right:auto">symetric launches in Australia first. Leave your email and we&rsquo;ll let you know when that changes, nothing else, just the one email when it&rsquo;s time.</p>
+      <!-- TODO: form has no real submission endpoint yet. Needs one wired up
+           (a Supabase table matching the app's own backend, or a service like
+           Formspree) before this can go live. Static site, no server routes. -->
+      <form class="waitlist-form mt-xl" method="post" action="#">
+        <label for="waitlist-email" class="sr-only">Email address</label>
+        <input type="email" id="waitlist-email" name="email" placeholder="you@example.com" required />
+        <button type="submit" class="btn btn-primary">Join the waitlist</button>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    import "../scripts/checkin-grid.js";
+  </script>
+</BaseLayout>

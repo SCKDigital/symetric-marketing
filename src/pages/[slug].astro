@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return pages.map((page) => ({
+    params: { slug: page.id },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<BaseLayout title={`symetric: ${page.data.title}`} description={page.data.description}>
+  <div class="shell">
+    <section class="sec">
+      {page.data.label && <p class="sec-label">{page.data.label}</p>}
+      <h1 style="max-width:none">{page.data.title}</h1>
+      <div class="stub-body" style="margin-top:22px">
+        <Content />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

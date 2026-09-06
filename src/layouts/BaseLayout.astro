@@ -1,0 +1,83 @@
+---
+import "@fontsource/source-serif-4/latin-400.css";
+import "@fontsource/source-serif-4/latin-500.css";
+import "@fontsource/source-serif-4/latin-600.css";
+import "@fontsource/source-serif-4/latin-700.css";
+import "@fontsource/ibm-plex-mono/latin-400.css";
+import "@fontsource/ibm-plex-mono/latin-500.css";
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  structuredData?: boolean;
+}
+
+const { title, description, structuredData = false } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// TODO: no Open Graph image exists yet (spec calls for 1200x630 at public/brand/).
+// og:image is intentionally omitted below rather than pointing at a missing file.
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Sets the theme before first paint, so there's no flash of the wrong
+         theme. Dark is the default; only overrides to "light" if the visitor
+         has explicitly chosen it before. This is the one deliberate exception
+         to "no client JS beyond the hero grid": a persistent theme choice
+         genuinely can't be done in pure CSS. -->
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem("symetric-theme");
+        var theme = stored === "light" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- TODO: PNG favicon fallback and apple-touch-icon.png (180x180) not supplied yet -->
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary" />
+
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "symetric",
+        applicationCategory: "HealthApplication",
+        operatingSystem: "Android, iOS",
+        description: "symetric helps you record how you're doing between medical appointments, then turns it into a report you can hand to your clinician.",
+        offers: {
+          "@type": "Offer",
+          price: "9.99",
+          priceCurrency: "AUD",
+          areaServed: "AU",
+        },
+      })} />
+    )}
+
+    <!-- No cookie banner, no trackers. Cookieless, self-hosted analytics (e.g. a
+         request log or a tool like Plausible/Fathom self-hosted) would be wired
+         in here later. Nothing is added in this pass. -->
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

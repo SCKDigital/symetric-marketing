@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://symetric.app/sitemap-index.xml

@@ -1,0 +1,55 @@
+---
+const currentPath = Astro.url.pathname;
+---
+<header>
+  <div class="shell">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/">
+        <img src="/brand/symetric-logo.svg" alt="" width="23" height="23" />
+        symetric
+      </a>
+      <a class="btn btn-primary ui nav-cta" href="/#get">Get symetric</a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-burger" aria-label="Menu">
+        <span></span>
+      </label>
+      <div class="navlinks">
+        <a href="/what-it-tracks" aria-current={currentPath === "/what-it-tracks/" || currentPath === "/what-it-tracks" ? "page" : undefined}>What it tracks</a>
+        <a href="/#weeks">First six weeks</a>
+        <a href="/your-data" aria-current={currentPath === "/your-data/" || currentPath === "/your-data" ? "page" : undefined}>Your data</a>
+        <a href="/for-clinicians" aria-current={currentPath === "/for-clinicians/" || currentPath === "/for-clinicians" ? "page" : undefined}>For clinicians</a>
+      </div>
+    </nav>
+  </div>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to light mode">
+    <svg class="icon-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <circle cx="10" cy="10" r="4" />
+      <path stroke-linecap="round" d="M10 1.5v2M10 16.5v2M18.5 10h-2M3.5 10h-2M15.6 4.4l-1.4 1.4M5.8 14.2l-1.4 1.4M15.6 15.6l-1.4-1.4M5.8 5.8L4.4 4.4" />
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M17 12.4A7 7 0 0 1 7.6 3a7 7 0 1 0 9.4 9.4Z" />
+    </svg>
+  </button>
+</header>
+
+<script>
+  const btn = document.getElementById("theme-toggle");
+
+  function current() {
+    return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+  }
+
+  function syncLabel() {
+    const isLight = current() === "light";
+    btn?.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+  }
+
+  syncLabel();
+
+  btn?.addEventListener("click", () => {
+    const next = current() === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("symetric-theme", next);
+    syncLabel();
+  });
+</script>

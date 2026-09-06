@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const bodyDomains = [
+  "fatigue",
+  "pain",
+  "joint instability",
+  "standing up (feeling lightheaded, or like you might grey out)",
+  "gut (nausea, bloating, cramping)",
+  "end-of-day exhaustion",
+];
+
+const bodyEvents = [
+  "a joint going out",
+  "nearly fainting",
+  "a migraine starting",
+  "a crash",
+  "a reaction",
+  "an injury",
+];
+
+const mindDomains = [
+  "mood",
+  "energy",
+  "anxiety",
+  "concentration",
+  "irritability",
+  "social depletion",
+  "sensory overwhelm",
+  "motivation",
+];
+
+const tiers = [
+  { name: "Mind", status: "Always on", on: true },
+  { name: "Sleep", status: "Always on", on: true },
+  { name: "Body", status: "Optional", on: false },
+  { name: "Cycle", status: "Optional", on: false },
+];
+---
+
+<BaseLayout
+  title="symetric: What it tracks"
+  description="Mind and sleep are the core, always on. Body and day-1 cycle logging are optional. Here's exactly what each one covers, and what symetric deliberately doesn't do."
+>
+  <div class="shell">
+    <section class="hero pb-tight tracks-hero">
+      <div class="tracks-hero-text">
+        <p class="kicker">What it tracks</p>
+        <h1 style="max-width:20ch">Two things are always on. Two more are there if you need them.</h1>
+        <p class="lede">symetric started as a mind tracker, and mind and sleep are still the core of what it does. Body and day-1 cycle logging are optional additions, for people who want more context alongside it.</p>
+      </div>
+      <div class="tier-glance" aria-label="The four things symetric can track, and whether each is always on or optional">
+        {tiers.map((t) => (
+          <div class="tier-row">
+            <span class="tier-name">{t.name}</span>
+            <span class={`tier-badge ${t.on ? "tier-badge--on" : "tier-badge--optional"}`}>{t.status}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ MIND + SLEEP (the core, paired) ============ -->
+  <div class="shell">
+    <section class="sec" aria-labelledby="core-h">
+      <p class="sec-label">The core</p>
+      <h2 id="core-h">Mind and sleep. Always on.</h2>
+      <div class="core-pair mt-xl">
+        <div>
+          <h3>Mind</h3>
+          <p class="mt-md muted">Where symetric started, and still the centre of what it does. 8 domains: {mindDomains.join(", ")}. <b>Pick 2 of them or all 8, and change your mind whenever you like.</b> A few check-ins a day, 30 seconds each, inside a window you set.</p>
+        </div>
+        <div>
+          <h3>Sleep</h3>
+          <p class="mt-md muted">Separate from the 8 domains, not something you switch on or off. Once a day: how did you sleep last night, and how many hours, if you want to log that part too, it&rsquo;s optional. <b>Skip it on the days you need to.</b></p>
+        </div>
+      </div>
+      <p class="big-quiet mt-2xl muted">Every tracker like this forces a trade: broad enough to cover everything that&rsquo;s actually going on for you, or simple enough to actually stick with, rarely both. The broad ones make you configure your way out of overwhelm after you&rsquo;ve already signed up. The simple ones only work if there&rsquo;s just one thing to track. <b>symetric doesn&rsquo;t trade.</b> You tell it what matters once, in under a minute, and it stays that light every single day after, no matter how many domains you&rsquo;re juggling. That&rsquo;s not a feature, it&rsquo;s the whole bet: small enough to actually use, and still big enough to bring real evidence to a clinician.</p>
+    </section>
+  </div>
+
+  <!-- ============ BODY ============ -->
+  <div class="shell">
+    <section class="sec pt-tight" aria-labelledby="body-h">
+      <p class="sec-label">Optional, and still new</p>
+      <h2 id="body-h">Body.</h2>
+      <p class="mt-lg muted">Body tracking is optional, turned on at signup or later in Settings, and it's newer than mind. We're still refining it, so treat it as available now, not as a finished, established feature yet.</p>
+      <div class="plain mt-xl">
+        <div class="line">
+          <span class="tick yes" aria-hidden="true">✓</span>
+          <span class="txt"><b>6 domains you can check in on:</b> {bodyDomains.join(", ")}. End-of-day exhaustion is the one required check-in once body tracking is on, it asks each evening. Everything else is optional, and there's an optional morning check-in too.</span>
+        </div>
+        <div class="line">
+          <span class="tick yes" aria-hidden="true">✓</span>
+          <span class="txt"><b>6 events you can log as they happen:</b> {bodyEvents.join(", ")}.</span>
+        </div>
+      </div>
+      <p class="mt-xl muted"><b>If joint instability, standing up feeling faint, or persistent exhaustion are part of your picture</b>, alongside the mind side or instead of it, this is for adding that context.</p>
+    </section>
+  </div>
+
+  <!-- ============ CYCLE ============ -->
+  <div class="shell">
+    <section class="sec pt-tight" aria-labelledby="cycle-h">
+      <p class="sec-label">Optional, for context</p>
+      <h2 id="cycle-h">Day 1. Nothing more.</h2>
+      <p class="mt-lg muted">Log Day 1, the date your period starts, whenever it happens. That's the only thing you enter. From that, symetric shows a simple running count: Day 13, Day 24, however many days since your last Day 1. Log the next Day 1, and it resets.</p>
+      <div class="cycle-callout mt-xl">
+        <p>That&rsquo;s all it does. It doesn&rsquo;t predict your next period, estimate a phase, or draw conclusions from the date.</p>
+        <p class="mt-md">Plenty of apps will tell you what phase you're probably in. symetric just tells you how many days it's been, so you and your clinician have that context, <b>not a guess dressed up as one</b>.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ CLOSE ============ -->
+  <div class="shell">
+    <section class="close pt-tight" aria-labelledby="close-h">
+      <h2 id="close-h">Start with mind. Add the rest if it helps.</h2>
+      <div class="cta-row">
+        <!-- TODO: real App Store and Google Play listing URLs not available yet -->
+        <a class="btn btn-primary" href="#">Get symetric</a>
+        <a class="btn btn-ghost" href="/report">Read the sample report</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
