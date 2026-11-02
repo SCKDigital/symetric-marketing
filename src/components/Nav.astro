@@ -1,11 +1,15 @@
 ---
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+// Ordered by what Aisha asks before she'd install anything: what her
+// clinician gets, what it asks of her, whether it punishes a bad week, where
+// her data goes, and what it costs. For clinicians lives in the footer; it's
+// a page she forwards, not one she reads.
 const links = [
-  { href: "/#how", label: "How it works" },
   { href: "/report", label: "Sample report" },
   { href: "/what-it-tracks", label: "What it tracks" },
+  { href: "/first-six-weeks", label: "The first six weeks" },
   { href: "/your-data", label: "Your data" },
-  { href: "/for-clinicians", label: "For clinicians" },
+  { href: "/#get", label: "Price" },
 ];
 ---
 <header>
@@ -15,7 +19,7 @@ const links = [
         <img src="/brand/symetric-logo.svg" alt="" width="28" height="28" />
         symetric
       </a>
-      <a class="btn btn-primary nav-cta" href="/#get">Get the app</a>
+      <a class="btn btn-primary nav-cta" href="/#demo">Try it</a>
       <input type="checkbox" id="nav-toggle" class="nav-toggle" />
       <label for="nav-toggle" class="nav-burger" aria-label="Menu">
         <span></span>

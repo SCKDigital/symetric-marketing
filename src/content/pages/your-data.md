@@ -1,55 +1,89 @@
 ---
 title: "Your data"
-description: "How symetric stores, processes and lets you remove your data."
+description: "Where symetric keeps what you log, who can see it, what never happens to it, and how to take it with you or delete it."
 label: "The honest version"
 ---
 
-Plenty of apps say "your data never leaves your phone" when it isn't quite true. This is the plain-language version of exactly what happens to what you type into symetric. For the formal version, see the [privacy policy](/privacy).
+Plenty of apps say "your data never leaves your phone" when that isn't quite true. Here's exactly what happens to what you log, in plain words. The formal version is the [privacy policy](/privacy).
 
-<div class="plain mt-xl">
+<p class="in-short">In short: it's stored in your own encrypted account, in Sydney. Patterns are found on your phone. No AI reads it, nobody buys it, and your clinician sees only what you choose to hand them.</p>
+
+## Where it lives
+
+<div class="plain">
   <div class="line">
-    <span class="tick yes" aria-hidden="true">&check;</span>
-    <span class="txt"><b>Your check-ins are stored in your own account,</b> on an encrypted database, isolated so that no other user, and no unauthenticated request, can reach them. That's how they survive a lost phone. Named staff can still access entries for support, technical or security reasons, and every one of those accesses is logged.</span>
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>In your own encrypted account, in Australia.</b> Your entries are stored in a database in Sydney, walled off so no other user can reach them, and nobody who isn't signed in as you. That's also how your record survives a lost phone.</span>
   </div>
   <div class="line">
-    <span class="tick yes" aria-hidden="true">&check;</span>
-    <span class="txt"><b>Every pattern is calculated on your device.</b> Correlations, baselines, sleep relationships, medication effects: all of it runs in the app, on your phone.</span>
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>Patterns are found on your phone.</b> What moves with what, day-of-week patterns, what follows a poor night: all of it is worked out in the app. Once a week the database also refreshes your baseline, your normal, inside your own account. Nothing is sent anywhere else to be analysed.</span>
   </div>
   <div class="line">
-    <span class="tick no" aria-hidden="true">&#10005;</span>
-    <span class="txt"><b>There is no AI within symetric.</b> Nothing you log is sent to a language model or any third party to be interpreted. <a href="/how-ai-was-used">Read how AI was used in building symetric</a>.</span>
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>Your clinician sees only what you give them.</b> The report is made on your phone, and you decide who gets it. Symetric never sends it anywhere on its own.</span>
   </div>
   <div class="line">
-    <span class="tick no" aria-hidden="true">&#10005;</span>
-    <span class="txt"><b>Never sold, or shared with anyone beyond the providers that run the app.</b> No ads, no subscription, no data partnerships.</span>
-  </div>
-  <div class="line">
-    <span class="tick no" aria-hidden="true">&#10005;</span>
-    <span class="txt"><b>No location, camera, contacts, or wearable access.</b> symetric doesn't ask for any of it, and doesn't connect to Apple Health, Google Fit, or a wearable.</span>
-  </div>
-  <div class="line">
-    <span class="tick yes" aria-hidden="true">&check;</span>
-    <span class="txt"><b>No usage analytics, at the moment.</b> The app doesn&rsquo;t currently send any. If that changes, it will be things like which screens are opened, never your scores or check-in content, the privacy policy will say so first, and you&rsquo;ll be able to opt out.</span>
-  </div>
-  <div class="line">
-    <span class="tick yes" aria-hidden="true">&check;</span>
-    <span class="txt"><b>You can take it or delete it at any time.</b> Full export as CSV or JSON, delete any date range, or reset your baseline when your normal genuinely changes.</span>
-  </div>
-  <div class="line">
-    <span class="tick yes" aria-hidden="true">&check;</span>
-    <span class="txt"><b>Lock it with a PIN if you want to.</b> An optional app lock means someone picking up your phone still can&rsquo;t open symetric.</span>
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>You can lock it.</b> Set an optional PIN, and someone picking up your phone still can't open symetric. Only a scrambled version of the PIN is stored, never the PIN itself.</span>
   </div>
 </div>
 
-## If you delete your account
+## What never happens
 
-Your entries, patterns, markers, and appointment records are permanently removed from the database. Deleted data can persist in encrypted backups for a short period before those backups themselves expire, after which it's unrecoverable. Exact retention windows are in the [privacy policy](/privacy#10-deleting-your-account-and-your-data).
+<div class="plain">
+  <div class="line">
+    <span class="tick" aria-hidden="true">&#10005;</span>
+    <span class="txt"><b>No AI reads your entries.</b> Nothing you log is sent to a language model, or to anyone else, to be interpreted. <a href="/how-ai-was-used">How AI was used to build symetric</a>.</span>
+  </div>
+  <div class="line">
+    <span class="tick" aria-hidden="true">&#10005;</span>
+    <span class="txt"><b>It never labels you.</b> Symetric shows what changed and when. It doesn't suggest a diagnosis, or read a condition into your data.</span>
+  </div>
+  <div class="line">
+    <span class="tick" aria-hidden="true">&#10005;</span>
+    <span class="txt"><b>Never sold, and no ads.</b> Your health information goes to one place, the database that stores it. The services that send your reminders and sign-in emails never see it.</span>
+  </div>
+  <div class="line">
+    <span class="tick" aria-hidden="true">&#10005;</span>
+    <span class="txt"><b>Reminders don't say anything about you.</b> They only say a check-in is ready. They pass through Expo, Apple and Google to reach your phone, with none of your health information in them.</span>
+  </div>
+  <div class="line">
+    <span class="tick" aria-hidden="true">&#10005;</span>
+    <span class="txt"><b>No tracking of what you log.</b> The app counts how it's used, like which screens get opened and whether a check-in was finished, so we can see what's working. Never your scores, symptoms or patterns, and never your screen. Turn it off any time in Settings. And no access to your location, camera, contacts, Apple Health, Google Fit or a wearable.</span>
+  </div>
+</div>
 
-## Why this matters more here than most apps
+## Who else can see it
 
-Everything you log is health information, the most protected category under Australian privacy law, and often the exact kind of thing you'd rather not have mishandled. This page exists so you don't have to take "we take privacy seriously" on faith, you can see exactly what does and doesn't happen to what you type.
+A small number of named people can open entries, and only to answer a support request you've made, fix a fault, or keep the service secure. Every one of those accesses is logged. That's the honest answer most apps leave out.
 
-<div class="cta-row mt-2xl">
+## Taking it with you, or leaving
+
+<div class="plain">
+  <div class="line">
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>Export everything.</b> One JSON file or a set of CSV files, from Settings, any time.</span>
+  </div>
+  <div class="line">
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>Delete a period.</b> Remove any stretch of dates you don't want on the record.</span>
+  </div>
+  <div class="line">
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>Reset your baseline</b> when your normal genuinely changes, so patterns are measured against who you are now.</span>
+  </div>
+  <div class="line">
+    <span class="tick" aria-hidden="true">&check;</span>
+    <span class="txt"><b>Delete your account.</b> Everything is permanently removed: entries, patterns, markers and appointment records. Encrypted backups expire within 7 days, and after that nothing can be recovered. <a href="/privacy#10-deleting-your-account-and-your-data">The details</a>.</span>
+  </div>
+</div>
+
+## Why this page exists
+
+What you log is health information, the most protected kind under Australian privacy law, and the kind you'd least want mishandled. So rather than asking you to trust "we take privacy seriously", this page says exactly what happens.
+
+<div class="cta-row">
   <a class="btn btn-ghost" href="/privacy">Read the full privacy policy</a>
-  <a class="btn btn-ghost" href="/support">Questions? Get in touch</a>
+  <a class="btn btn-ghost" href="/support">Ask a question</a>
 </div>

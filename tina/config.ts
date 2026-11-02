@@ -19,9 +19,10 @@ const branch = process.env.HEAD || process.env.VERCEL_GIT_COMMIT_REF || "main";
 
 export default defineConfig({
   branch,
-  // Local editing only, no TinaCloud project connected.
-  clientId: null,
-  token: null,
+  // Reads from TinaCloud creds if present (see .env), falls back to local-only
+  // editing otherwise — so `astro dev` keeps working with no creds set.
+  clientId: process.env.TINA_CLIENT_ID || null,
+  token: process.env.TINA_TOKEN || null,
   build: {
     outputFolder: "admin",
     publicFolder: "public",
@@ -74,7 +75,7 @@ export default defineConfig({
         path: "src/content/home",
         format: "md",
         match: { include: "home" },
-        ui: { allowedActions: { create: false, delete: false }, router: () => "/" },
+        ui: { allowedActions: { create: false, delete: false } },
         fields: [
           str("seoTitle", "Browser tab title"),
           str("seoDescription", "Search engine description", { component: "textarea" }),
@@ -186,7 +187,7 @@ export default defineConfig({
         path: "src/content/tracks",
         format: "md",
         match: { include: "what-it-tracks" },
-        ui: { allowedActions: { create: false, delete: false }, router: () => "/what-it-tracks" },
+        ui: { allowedActions: { create: false, delete: false } },
         fields: [
           str("seoTitle", "Browser tab title"),
           str("seoDescription", "Search engine description", { component: "textarea" }),
@@ -218,11 +219,33 @@ export default defineConfig({
             str("eyebrow", "Small label"),
             str("heading", "Heading"),
             str("intro", "Intro", { component: "textarea" }, MARKS),
-            { type: "string", name: "domains", label: "Body domains (the count updates itself)", list: true },
-            str("domainsNote", "Text after the domain list", { component: "textarea" }, MARKS),
-            { type: "string", name: "events", label: "Events (the count updates itself)", list: true },
-            str("mapTitle", "Body map, bold lead"),
-            str("mapText", "Body map, text", { component: "textarea" }, MARKS),
+            {
+              type: "object",
+              name: "rhythm",
+              label: "When it asks (three cards)",
+              list: true,
+              ui: { itemProps: (i: any) => ({ label: i?.when }) },
+              fields: [str("when", "When"), str("title", "Title"), str("text", "Text", { component: "textarea" }, MARKS)],
+            },
+            str("domainsHeading", "Heading over the body areas"),
+            {
+              type: "object",
+              name: "domains",
+              label: "Body areas you can rate",
+              description: "Use the app's own names, in the app's order.",
+              list: true,
+              ui: { itemProps: (i: any) => ({ label: i?.name }) },
+              fields: [
+                str("name", "Name"),
+                str("detail", "What it covers"),
+                { type: "boolean", name: "always", label: "Asked every evening (shows a badge)" },
+              ],
+            },
+            str("eventsHeading", "Heading over the events"),
+            { type: "string", name: "events", label: "Events", list: true },
+            str("mapTitle", "Body map title"),
+            str("mapText", "Body map text", { component: "textarea" }, MARKS),
+            { type: "string", name: "painWords", label: "Words for pain (tags)", list: true },
             str("note", "Small print", { component: "textarea" }, MARKS),
           ]),
           group("cycle", "Cycle", [

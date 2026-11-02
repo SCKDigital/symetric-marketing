@@ -1,25 +1,23 @@
 ---
-title: "Terms of use"
-description: "Terms of use for symetric."
+title: Terms of use
+description: Terms of use for symetric.
 ---
 
-> **Draft, not yet legal advice.** Prepared for review by an Australian lawyer before it's treated as final. Sections 11 and 16 in particular need professional review, the Australian Consumer Law and the unfair contract terms regime both constrain what can be said there. Anything marked `[TODO: ...]` below is an open item, not a decided fact.
-
-**Last updated:** 19 August 2026
+**Last updated:** 3 November 2026
 **Version:** 1.0
 
 ## Summary of key points
 
 This summary gives you the highlights. We recommend reading the whole document, since this summary doesn't capture every detail.
 
-- **What this is:** An agreement between you and us that governs your use of the symetric app, accepted separately from your consent to our Privacy Policy. [Read more](#1-these-terms)
-- **Who can use it:** Adults 18+ located in Australia, one account each, for personal use. [Read more](#2-who-can-use-symetric)
-- **Not medical advice:** symetric doesn't diagnose, treat, monitor you, or replace a qualified health professional, this is the single most important thing in this document. [Read more](#5-symetric-is-not-medical-advice)
-- **In a crisis:** symetric isn't a monitoring or emergency service. Call Lifeline (13 11 14) or 000. [Read more](#6-if-you-need-urgent-help)
-- **Your entries stay yours:** We only get the limited licence needed to run the app for you, never to sell, advertise with, or train AI on your data. [Read more](#8-your-information-and-your-entries)
-- **Cost:** AU$9.99 once. No subscription, no ads, no in-app purchases. [Read more](#9-fees)
-- **Ending things:** You can close your account and delete your data at any time; we can only suspend or close yours for serious breach, legal reasons, or discontinuing the app, normally with notice. [Read more](#11-suspending-or-closing-your-account)
-- **Your legal rights:** Nothing here overrides guarantees you have under the Australian Consumer Law. [Read more](#14-your-rights-under-the-australian-consumer-law)
+* **What this is:** An agreement between you and us that governs your use of the symetric app, accepted separately from your consent to our Privacy Policy. [Read more](#1-these-terms)
+* **Who can use it:** Adults 18+ located in Australia, one account each, for personal use. [Read more](#2-who-can-use-symetric)
+* **Not medical advice:** symetric doesn't diagnose, treat, monitor you, or replace a qualified health professional, this is the single most important thing in this document. [Read more](#5-symetric-is-not-medical-advice)
+* **In a crisis:** symetric isn't a monitoring or emergency service. Call Lifeline (13 11 14) or 000. [Read more](#6-if-you-need-urgent-help)
+* **Your entries stay yours:** We only get the limited licence needed to run the app for you, never to sell, advertise with, or train AI on your data. [Read more](#8-your-information-and-your-entries)
+* **Cost:** AU$9.99 once. No subscription, no ads, no in-app purchases. [Read more](#9-fees)
+* **Ending things:** You can close your account and delete your data at any time; we can only suspend or close yours for serious breach, legal reasons, or discontinuing the app, normally with notice. [Read more](#11-suspending-or-closing-your-account)
+* **Your legal rights:** Nothing here overrides guarantees you have under the Australian Consumer Law. [Read more](#14-your-rights-under-the-australian-consumer-law)
 
 ## 1. These terms
 
@@ -45,7 +43,7 @@ You may create one account for your own personal use. Do not share your account 
 
 <p class="in-short">In short: symetric doesn't use passwords, we send a one-time link to your email instead, so keeping your email account secure is what keeps yours secure. Tell us if that changes, and keep your details current.</p>
 
-symetric doesn't use passwords. Each time you sign in, we email you a one-time link and that link signs you in directly. This means keeping your email account secure is what keeps your symetric account secure, since whoever can open that email can sign in. You're responsible for activity that occurs under your account. Tell us promptly at privacy@symetric.app if you believe your email account, and so your symetric account, has been compromised.
+symetric doesn't use passwords. Each time you sign in, we email you a one-time link and that link signs you in directly. This means keeping your email account secure is what keeps your symetric account secure, since whoever can open that email can sign in. You're responsible for activity that occurs under your account. Tell us promptly at [privacy@symetric.app](mailto:privacy@symetric.app) if you believe your email account, and so your symetric account, has been compromised.
 
 Please give us accurate account information and keep your email address current, because it is how we reach you about your account, how you sign in, and how we tell you about changes to these terms.
 
@@ -56,11 +54,12 @@ Please give us accurate account information and keep your email address current,
 We grant you a personal, non exclusive, non transferable, revocable licence to install and use symetric on devices you own or control, for your own personal, non commercial use.
 
 You must not:
-- Copy, modify, reverse engineer, decompile or create derivative works from the app, except to the extent the law says you may
-- Sell, rent, sublicense or commercially exploit the app or any part of it
-- Use the app to store or transmit anything unlawful
-- Interfere with the app's operation or security, attempt to access another user's data, or use automated means to access the service
-- Use the app in any way that breaches these terms or any applicable law
+
+* Copy, modify, reverse engineer, decompile or create derivative works from the app, except to the extent the law says you may
+* Sell, rent, sublicense or commercially exploit the app or any part of it
+* Use the app to store or transmit anything unlawful
+* Interfere with the app's operation or security, attempt to access another user's data, or use automated means to access the service
+* Use the app in any way that breaches these terms or any applicable law
 
 ## 5. symetric is not medical advice
 
@@ -71,10 +70,11 @@ You must not:
 symetric is a self tracking tool. It records what you enter and identifies patterns in your own data.
 
 symetric does not:
-- Diagnose any medical or psychological condition
-- Provide medical advice, treatment recommendations, or a clinical opinion
-- Replace assessment or care by a qualified health professional
-- Monitor you, detect emergencies, or alert anyone on your behalf
+
+* Diagnose any medical or psychological condition
+* Provide medical advice, treatment recommendations, or a clinical opinion
+* Replace assessment or care by a qualified health professional
+* Monitor you, detect emergencies, or alert anyone on your behalf
 
 The patterns, connections, baseline comparisons, prepared questions and reports the app produces are **generated from information you entered about yourself**. They are indicative only. They are not clinical findings and they are not a substitute for professional judgement.
 
@@ -119,10 +119,11 @@ symetric is a one-off purchase of AU$9.99. There is no subscription and no recur
 Your purchase is made and billed through the Apple App Store or Google Play under their terms, and you would manage any refund request through us as described in the guarantee, or through your App Store or Google Play account settings.
 
 We may introduce additional paid features in future. If we do:
-- We will give you advance notice before any charge applies to you
-- Features you already have will not be moved behind a paywall without notice and a reasonable opportunity to export your data and close your account
-- Any such purchase would be billed through the Apple App Store or Google Play under their terms, and you would manage or cancel it through your App Store or Google Play account settings rather than through us
-- Your rights under the Australian Consumer Law would continue to apply
+
+* We will give you advance notice before any charge applies to you
+* Features you already have will not be moved behind a paywall without notice and a reasonable opportunity to export your data and close your account
+* Any such purchase would be billed through the Apple App Store or Google Play under their terms, and you would manage or cancel it through your App Store or Google Play account settings rather than through us
+* Your rights under the Australian Consumer Law would continue to apply
 
 ## 10. Availability and changes to the app
 
@@ -154,7 +155,7 @@ You obtained symetric through the Apple App Store or Google Play, and your use i
 
 Apple and Google are not parties to these terms and are not responsible for symetric, its content, or any support, maintenance or claims relating to it. That responsibility is ours. Apple and its subsidiaries are third party beneficiaries of these terms and may enforce them against you.
 
-If you have a problem with the app, contact us at support@symetric.app, not Apple or Google.
+If you have a problem with the app, contact us at [support@symetric.app](mailto:support@symetric.app), not Apple or Google.
 
 ## 13. Our intellectual property
 
@@ -207,5 +208,5 @@ These terms are governed by the laws of Victoria, Australia, and the courts of V
 <p class="in-short">In short: Support and privacy contact details.</p>
 
 **SCK Digital**
-Support: support@symetric.app
-Privacy: privacy@symetric.app
+Support: [support@symetric.app](mailto:support@symetric.app)
+Privacy: [privacy@symetric.app](mailto:privacy@symetric.app)

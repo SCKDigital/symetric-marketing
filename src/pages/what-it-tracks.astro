@@ -73,22 +73,45 @@ const mindDomains = [
     <section class="panel acc-anxiety" aria-labelledby="body-h" style="margin-top:96px">
       <p class="eyebrow">{c.body.eyebrow}</p>
       <h2 id="body-h">{c.body.heading}</h2>
-      <p class="muted" style="margin-top:16px;max-width:40em" set:html={inline(c.body.intro)} />
-      <div class="plain" style="margin-top:28px">
-        <div class="line">
-          <span class="tick" aria-hidden="true">✓</span>
-          <span class="txt"><b>{c.body.domains.length} domains you can check in on:</b> {c.body.domains.join(", ")}. <Fragment set:html={inline(c.body.domainsNote)} /></span>
+      <p class="muted" style="margin-top:16px;max-width:40em;font-size:18px" set:html={inline(c.body.intro)} />
+
+      <!-- When it asks: evening, morning, in the moment -->
+      <div class="grid-3 swipe" style="margin-top:36px">
+        {c.body.rhythm.map((r) => (
+          <div class="card">
+            <i class="mark"></i>
+            <small class="when">{r.when}</small>
+            <h3>{r.title}</h3>
+            <p set:html={inline(r.text)} />
+          </div>
+        ))}
+      </div>
+
+      <!-- What you can rate -->
+      <h3 class="sub">{c.body.domainsHeading}</h3>
+      <ul class="areas">
+        {c.body.domains.map((d) => (
+          <li>
+            <b>{d.name}{d.always && <span class="badge badge-on">Every evening</span>}</b>
+            <span>{d.detail}</span>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Events and the body map -->
+      <div class="grid-2" style="margin-top:40px">
+        <div class="card">
+          <h3>{c.body.eventsHeading}</h3>
+          <div class="chips">{c.body.events.map((e) => <span class="chip">{e}</span>)}</div>
         </div>
-        <div class="line">
-          <span class="tick" aria-hidden="true">✓</span>
-          <span class="txt"><b>{c.body.events.length} events you can log as they happen:</b> {c.body.events.join(", ")}.</span>
-        </div>
-        <div class="line">
-          <span class="tick" aria-hidden="true">✓</span>
-          <span class="txt"><b>{c.body.mapTitle}</b> <Fragment set:html={inline(c.body.mapText)} /></span>
+        <div class="card">
+          <h3>{c.body.mapTitle}</h3>
+          <p set:html={inline(c.body.mapText)} />
+          <div class="chips">{c.body.painWords.map((w) => <span class="chip">{w}</span>)}</div>
         </div>
       </div>
-      <p class="fine" style="margin-top:20px" set:html={inline(c.body.note)} />
+
+      <p class="fine" style="margin-top:24px" set:html={inline(c.body.note)} />
     </section>
 
     <!-- ============ CYCLE ============ -->
@@ -111,3 +134,20 @@ const mindDomains = [
     </section>
   </div>
 </BaseLayout>
+
+<style>
+  .when { display: block; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--acc); margin-bottom: 8px; }
+  .sub { margin-top: 48px; font-size: 20px; }
+
+  /* The body areas: a quiet three-column list, each name with the app's own
+     one-line description under it. */
+  .areas { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
+  .areas li { padding: 16px 0; border-top: 1px solid var(--rule); }
+  .areas b { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 16px; font-weight: 700; color: var(--ink); }
+  .areas .badge { font-size: 11px; padding: 3px 8px; }
+  .areas span:not(.badge) { display: block; margin-top: 4px; font-size: 15px; color: var(--ink-2); }
+  .grid-2 .card .chips { margin-top: 16px; }
+
+  @media (max-width: 900px) { .areas { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .areas { grid-template-columns: 1fr; } }
+</style>

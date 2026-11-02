@@ -8,7 +8,7 @@ Most tracking apps don't tell you what the first few weeks feel like, because th
 
 ## Week 1: you're just logging
 
-Nothing to see. Nothing's wrong, symetric just needs real data before it can say anything useful about it. A few check-ins a day, thirty seconds each, inside a window you set. That's the whole job this week.
+Nothing to see. Nothing's wrong, symetric just needs real data before it can say anything useful about it. Three check-ins a day by default, thirty seconds each, inside a window you set. That's the whole job this week.
 
 <b>If you miss a day, or three, it costs you nothing.</b> There's no streak to break and nothing resets. Pick it back up when you can, the gap itself is still information.
 

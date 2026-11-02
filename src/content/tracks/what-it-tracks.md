@@ -1,9 +1,9 @@
 ---
 seoTitle: "symetric: What it tracks"
-seoDescription: "Mind and sleep are the core, always on. Body and day-1 cycle logging are optional. Here's exactly what each one covers, and what symetric deliberately doesn't do."
+seoDescription: "Mind and sleep, every day. Body and cycle if you want them. Exactly what symetric asks you, and what it deliberately doesn't do."
 eyebrow: What it tracks
-heading: Two things are always on. Two more are there if you need them.
-lede: Symetric started as a mind tracker, and mind and sleep are still the core of what it does. Body and day-1 cycle logging are optional, for people who want more context alongside it.
+heading: Mind and sleep every day. Body and cycle if they’re part of it.
+lede: Start with how your head is and how you slept. Add your body or your cycle when you want the fuller picture. Nothing here asks you to name a condition.
 tiers:
   - name: Mind
     status: Always on
@@ -21,45 +21,75 @@ core:
   eyebrow: The core
   heading: Mind and sleep. Always on.
   mindTitle: Mind
-  mindText: Where symetric started, and still the centre of what it does. **Pick 2 of the 8 or all of them, and change your mind whenever you like.** Three check-ins a day by default, inside a window you set.
+  mindText: Short check-ins through the day, three by default, inside hours you set. **Because by 9pm, you’ve forgotten what 11am felt like.** Pick 2 of the 8 or all of them, and change them whenever you like.
   sleepTitle: Sleep
-  sleepText: "Separate from the 8 domains, not something you switch on or off. Once a day: how did you sleep last night, and how many hours if you want to log that too. **Skip it on the days you need to.**"
-  quiet: "Most trackers make you choose: broad enough to cover everything that’s going on, or simple enough to stick with. **You tell symetric what matters once, in under a minute, and it stays that light every day after**, however many domains you’re tracking."
+  sleepText: "Once a day: how you slept, and how many hours if you want to add that. It sits apart from the 8. **Skip it on the days you need to. Nothing breaks.**"
+  quiet: Most trackers make you choose between covering everything and being easy enough to keep using. **You choose what matters once, in under a minute, and every check-in after that stays short**, however many things you track.
 body:
   eyebrow: Optional
-  heading: Body.
-  intro: "**If joint instability, standing up feeling faint, or persistent exhaustion are part of your picture**, alongside the mind side or instead of it, this is where that goes. Turn it on when you set up, or later in Settings."
+  heading: Your body, if it’s part of the picture.
+  intro: Pain, dizziness, a joint giving way, a crash after a busy day. If your body is part of what’s going on, track it next to your mind, or on its own. Switch it on when you set up, or later in Settings.
+  rhythm:
+    - when: Every evening
+      title: One question, plus your picks
+      text: How wrung out you are at the end of the day is the one question that’s always asked. Add any of the others that apply to you.
+    - when: Mornings, if you want
+      title: Up to four, first thing
+      text: Choose up to four to answer when you wake, so you can see how your mornings and evenings differ.
+    - when: When it happens
+      title: Log the moment
+      text: Tap an event as it happens, so it’s on the record with the time it started, not pieced together later.
+  domainsHeading: What you can rate
   domains:
-    - fatigue across the day
-    - joint and muscle pain
-    - widespread pain
-    - joint instability
-    - breathing (air hunger, breathless on effort, a tight chest)
-    - dizziness (lightheaded, heart racing, greying out on standing)
-    - gut (nausea, bloating, cramping)
-    - brain fog
-    - end-of-day exhaustion
-  domainsNote: End-of-day exhaustion is the one required question once body tracking is on, it asks each evening. Pick whichever of the rest apply to you. There’s an optional morning check-in too, where you choose up to four of them to answer first thing.
+    - name: Fatigue across the day
+      detail: How heavy your body felt, taking the day as a whole.
+    - name: Joint and muscle pain
+      detail: Specific places you could point to.
+    - name: Widespread pain
+      detail: Aching or burning all over, skin sore to touch.
+    - name: Joint instability
+      detail: Looseness, giving way, holding yourself together.
+    - name: Breathing
+      detail: Air hunger, breathless on effort, or a tight chest.
+    - name: Dizziness
+      detail: Lightheaded, heart racing, greying out on standing.
+    - name: Gut
+      detail: Nausea, bloating, cramping.
+    - name: Brain fog
+      detail: Woolly thinking, losing the thread, reaching for words.
+    - name: End-of-day exhaustion
+      detail: Right now, this evening, at the end of it.
+      always: true
+  eventsHeading: What you can log as it happens
   events:
-    - a joint going out
-    - nearly fainting
-    - a migraine starting
-    - a crash
-    - a reaction
-    - an injury or strain
-    - palpitations
-  mapTitle: Where it hurt, and what it felt like.
-  mapText: Mark pain or instability on a body map, and describe pain in words, aching, burning, shooting, because a 6 that aches and a 6 that burns aren’t the same thing to a clinician.
-  note: Body tracking is newer than mind, and we’re still refining it. Everything above works now, but expect it to keep changing.
+    - A joint went out
+    - Nearly fainted, or did
+    - Migraine started
+    - A crash began
+    - A reaction
+    - An injury or strain
+    - Palpitations
+  mapTitle: Where it was, and what it felt like
+  mapText: Mark where it hurt or gave way on a body map, and describe pain in plain words. A 6 that aches and a 6 that burns aren’t the same thing to your clinician.
+  painWords:
+    - aching
+    - burning
+    - electric or shooting
+    - pins and needles
+    - numbness
+    - skin sore to touch
+    - throbbing
+    - stiff
+  note: Body tracking is newer than the mind side. Everything here works today, and it’s still being refined.
 cycle:
   eyebrow: Optional, for context
   heading: Day 1. Nothing more.
-  text: "Log Day 1, the date your period starts, whenever it happens. That’s the only thing you enter. From that, symetric shows a simple running count: Day 13, Day 24, however many days since your last Day 1. Log the next Day 1, and it resets."
+  text: Log Day 1, the day your period starts. That’s the only thing you enter. Symetric then counts the days, Day 13, Day 24, until you log the next Day 1 and it starts again.
   callout:
-    - That’s all it does. It doesn’t predict your next period, estimate a phase, or draw conclusions from the date.
-    - Plenty of apps will tell you what phase you’re probably in. Symetric just tells you how many days it’s been, so you and your clinician have that context, **not a guess dressed up as one**.
+    - It doesn’t predict your next period, guess your phase, or read anything into the date.
+    - Plenty of apps will tell you which phase you’re probably in. Symetric just tells you how many days it’s been, so you and your clinician have the count, **not a guess dressed up as a fact**.
 closing:
-  heading: Start with mind. Add the rest if it helps.
+  heading: Start with mind and sleep. Add the rest when it helps.
   tryLabel: Try it
   reportLabel: Read the sample report
 ---

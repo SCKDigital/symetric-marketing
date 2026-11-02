@@ -7,4 +7,9 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://symetric.app",
   integrations: [sitemap()],
+  // Tina's editor is a static file in public/admin, which the dev server only
+  // serves at its full path. Send the short address there too.
+  redirects: {
+    "/admin": "/admin/index.html",
+  },
 });
