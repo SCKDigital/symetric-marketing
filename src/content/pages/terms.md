@@ -180,7 +180,7 @@ We are not liable for any loss that was not reasonably foreseeable, or for indir
 
 We are not liable for any clinical decision, treatment change or health outcome arising from your use of the app or from anything it displays or produces, because symetric does not provide medical advice and is not a substitute for professional care.
 
-Where our liability can be limited rather than excluded, our liability to you is limited to `[TODO: pick one and confirm with a lawyer: resupplying the service / the amount you paid us in the 12 months before the claim / a fixed dollar amount]`.
+Where our liability can be limited rather than excluded, our liability to you is limited to the amount you paid us in the 12 months before the claim.
 
 Nothing here limits our liability for fraud, or for anything else the law does not permit us to limit.
 
@@ -209,4 +209,3 @@ These terms are governed by the laws of Victoria, Australia, and the courts of V
 **SCK Digital**
 Support: support@symetric.app
 Privacy: privacy@symetric.app
-`[TODO: postal address]`

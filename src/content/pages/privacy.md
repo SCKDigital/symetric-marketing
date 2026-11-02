@@ -17,7 +17,7 @@ This summary gives you the highlights. We recommend reading the whole policy, si
 - **What we collect:** Your account details, the health data you choose to enter, and the patterns we generate from it. [Read more](#3-what-we-collect)
 - **What we don't collect:** No location, camera, photos, microphone or contacts. No connection to Apple Health, Google Fit or wearables. Your health information is never sent to an AI or LLM service, never sold, and never used for advertising. [Read more](#3-what-we-collect)
 - **How it's analysed:** Pattern detection runs **on your device**, your scores aren't sent anywhere to be analysed. [Read more](#7-how-your-information-is-analysed)
-- **Who sees it:** Only the service providers that run the app (database, analytics, push notifications, email), never sold or shared for marketing. [Read more](#6-who-we-share-it-with-and-where-it-goes)
+- **Who sees it:** Only the service providers that run the app (database, push notifications, email), never sold or shared for marketing. [Read more](#6-who-we-share-it-with-and-where-it-goes)
 - **Where it's stored:** Your health information is stored in Australia. [Read more](#6-who-we-share-it-with-and-where-it-goes)
 - **Your control:** You can view, edit, export or delete your data at any time from within the app. [Read more](#10-deleting-your-account-and-your-data)
 - **Not medical advice:** symetric doesn't diagnose, treat, or replace a healthcare professional. [Read more](#16-symetric-is-not-a-medical-device)
@@ -44,7 +44,7 @@ After you verify your email, before any health information is collected, we conf
 
 You can withdraw consent at any time by deleting your account (see section 10), which withdraws all of it. You can also turn body tracking or cycle tracking off individually at any time in Settings, without deleting your account or affecting your mind-tracking consent.
 
-You do not have to use symetric, and you do not have to enter any particular piece of information beyond what's needed for the consents above. Every field is optional except your email address.
+You do not have to use symetric, and you do not have to enter any particular piece of information beyond what's needed for the consents above. Every field is optional except your email address and your date of birth.
 
 ## 3. What we collect
 
@@ -55,11 +55,13 @@ You do not have to use symetric, and you do not have to enter any particular pie
 - Your date of birth, to confirm you're 18 or over
 - Your timezone
 - Your notification preferences, including any do-not-disturb hours you set
+- A record of the consents you give, including when you gave them, and the IP address and device or browser type (user agent) they were sent from, so we can show consent was given
 
 ### Health information you enter
 - **Daily scores** across the mind areas you choose, from: mood, energy, anxiety, concentration, irritability, social depletion, sensory overwhelm, and motivation
 - **Baseline values** for each area, which start at a neutral placeholder and are then calculated from your own check-ins
-- **Check-in details**: when you completed each check-in, whether you logged it in one tap as "nothing unusual", whether you used the late-completion window, and whether you later edited an entry (including the number of edits and when they were made)
+- **Check-in notes**: any free-text note you add to a check-in
+- **Check-in details**: when you completed each check-in, whether you logged it in one tap as "nothing unusual", whether you used the late-completion window, and whether you later edited an entry (the number of edits and when the latest one was made)
 - **Sleep**: a daily sleep rating and, if you choose to add it, hours slept
 - **Body tracking**, only if you turn it on: scores for the physical symptoms you choose (such as fatigue, pain, joint instability, dizziness, breathing, gut symptoms and brain fog), optional morning scores, where on your body pain or instability occurred, words you choose to describe pain or breathlessness, events you log (such as a joint going out, nearly fainting or palpitations), and any notes you add
 - **Cycle tracking**, only if you turn it on: the dates you log as Day 1 of your period
@@ -73,10 +75,8 @@ symetric analyses your entries to produce new information about you, including d
 **This generated information is also health information about you**, and we protect it the same way.
 
 ### Technical information
-- Device push notification tokens issued by Apple or Google, so we can send you check-in reminders
-- Device information such as operating system version, app version, device model and device identifiers
-- IP address
-- App usage events collected through our analytics provider (see section 6)
+- Device push notification tokens issued through Expo, Apple or Google, and whether the device is iOS or Android, so we can send you check-in reminders
+- IP address, recorded with your consents (see above) and in our service providers' standard server logs
 - Information stored locally on your device, including cached data and scheduling information
 
 ### What we do **not** collect
@@ -122,13 +122,11 @@ We do not sell or rent your information. We share it only with the service provi
 | Provider | What they handle | Where |
 |---|---|---|
 | Supabase | Database and account authentication, this is where your health information is stored | Sydney, Australia (ap-southeast-2) |
-| PostHog | Product analytics, app usage events | European Union |
+| Expo (650 Industries) | Push notification relay, device tokens and the reminder text only, no health information | United States |
 | Apple / Google | Push notification delivery, device tokens only, no health information | United States |
-| `[TODO: email provider]` | Account emails, including the one-time link you use to sign in | `[TODO: location]` |
+| Resend | Account emails, including the one-time link you use to sign in, your email address only, no health information | United States `[TODO: confirm the sending region in the Resend dashboard, US is the default]` |
 
 **Your health information is stored in Australia.** Supabase is a company based overseas, and its personnel may access our systems from outside Australia for support and maintenance purposes. `[TODO: confirm backup region]`
-
-Our analytics provider, PostHog, processes data in the European Union. `[TODO: confirm we do not send any health scores, entries or generated patterns to PostHog, only events such as "check-in completed", with no health values attached]` `[TODO: the current iOS and Android app sends no analytics at all (symetric-native src/lib/analytics.ts is a stub). Either remove PostHog from this policy, or wire it up with the in-app opt-out section 14 promises before this goes live.]`
 
 Where we disclose information overseas, we take reasonable steps to ensure recipients handle it consistently with the Australian Privacy Principles, including through written data processing agreements.
 
@@ -168,15 +166,16 @@ No system is completely secure. If a data breach occurs that is likely to cause 
 
 <p class="in-short">In short: Delete your account in-app at any time, everything is permanently removed, aside from encrypted backups that expire on a set schedule.</p>
 
-You can delete your account and all associated data at any time from within the app, under `[TODO: settings path]`. You can also request deletion at `[TODO: privacy email]`.
+You can delete your account and all associated data at any time from within the app, under Settings → Delete all data and account. You can also request deletion at privacy@symetric.app.
 
 When you delete your account:
-- Your account, entries, patterns, markers and appointment records are permanently deleted from our database
-- Your analytics records are deleted from PostHog
+- Your account and sign-in, including your email address, are permanently deleted
+- Everything you've recorded is permanently deleted from our database: mind and body check-ins, sleep, cycle dates, patterns, markers, notes and appointment records
 - Your push notification registration is removed
+`[TODO: the delete-account function is live, but this is only true once the app build that calls it (symetric-native branch legal-links-and-deletion) is released.]`
 - Data cached on your device is removed when you uninstall the app
 
-Deleted data may persist in encrypted backups for up to `[TODO: X]` days before those backups expire, after which it is unrecoverable. `[TODO: confirm against Supabase backup retention]`
+Deleted data may persist in encrypted daily backups for up to 7 days before those backups expire, after which it is unrecoverable.
 
 We retain data only while your account is active, unless we are required to keep it longer by law.
 
@@ -184,7 +183,9 @@ We retain data only while your account is active, unless we are required to keep
 
 <p class="in-short">In short: View and edit your entries any time in the app, or request a full copy from us free of charge.</p>
 
-You can view and edit your entries directly in the app at any time. Where you edit an entry, we retain a record that an edit occurred and when, but not the previous value. `[TODO: confirm]`
+You can view and edit your entries directly in the app at any time. Where you edit an entry, we keep a count of how many times it has been edited and when it was last edited, but not the previous value.
+
+You can export everything you've recorded at any time, under Settings → Export my data, as a single JSON file or as a set of CSV files.
 
 You can request a copy of the personal information we hold about you by contacting us at privacy@symetric.app. We'll respond within 30 days. There's no charge.
 
@@ -202,17 +203,17 @@ The report is generated on your device and given to you. Once you share it, by p
 
 <p class="in-short">In short: Reminders never contain your health information, and you can turn them off at any time.</p>
 
-If you enable notifications, we send check-in reminders using Apple's and Google's push services. These reminders do not contain your health information.
+If you enable notifications, we send check-in reminders through Expo's push service, which passes them to Apple and Google to deliver. These reminders say only that a check-in is ready, and do not contain your health information.
 
 You can turn notifications off at any time in the app, or in your device settings.
 
 ## 14. Analytics
 
-<p class="in-short">In short: We use PostHog to see how the app is used in aggregate, and you can opt out at any time.</p>
+<p class="in-short">In short: The app doesn't use any analytics service. If that changes, we'll update this policy first and give you a way to opt out.</p>
 
-We use PostHog to understand how the app is used, for example, how many people complete onboarding, or which features are used. This helps us improve symetric.
+symetric does not currently send usage data to any analytics service.
 
-You can opt out of analytics at any time in `[TODO: settings path]`. Opting out does not affect any other part of the app.
+If we add product analytics in future, we'll update this policy before it starts, we won't send health scores, entries or generated patterns to it, and you'll be able to opt out in Settings.
 
 We do not use advertising trackers and we do not participate in cross-app tracking.
 
@@ -248,7 +249,6 @@ For any privacy question or request:
 
 **SCK Digital**
 Email: privacy@symetric.app
-`[TODO: postal address]`
 
 If you'd like to make a complaint about how we've handled your information, contact us first and we'll respond within 30 days. If you're not satisfied with our response, you can complain to:
 
