@@ -1,23 +1,29 @@
 ---
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const links = [
+  { href: "/#how", label: "How it works" },
+  { href: "/report", label: "Sample report" },
+  { href: "/what-it-tracks", label: "What it tracks" },
+  { href: "/your-data", label: "Your data" },
+  { href: "/for-clinicians", label: "For clinicians" },
+];
 ---
 <header>
   <div class="shell">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="/">
-        <img src="/brand/symetric-logo.svg" alt="" width="23" height="23" />
+        <img src="/brand/symetric-logo.svg" alt="" width="28" height="28" />
         symetric
       </a>
-      <a class="btn btn-primary ui nav-cta" href="/#get">Get symetric</a>
+      <a class="btn btn-primary nav-cta" href="/#get">Get the app</a>
       <input type="checkbox" id="nav-toggle" class="nav-toggle" />
       <label for="nav-toggle" class="nav-burger" aria-label="Menu">
         <span></span>
       </label>
       <div class="navlinks">
-        <a href="/what-it-tracks" aria-current={currentPath === "/what-it-tracks/" || currentPath === "/what-it-tracks" ? "page" : undefined}>What it tracks</a>
-        <a href="/#weeks">First six weeks</a>
-        <a href="/your-data" aria-current={currentPath === "/your-data/" || currentPath === "/your-data" ? "page" : undefined}>Your data</a>
-        <a href="/for-clinicians" aria-current={currentPath === "/for-clinicians/" || currentPath === "/for-clinicians" ? "page" : undefined}>For clinicians</a>
+        {links.map((l) => (
+          <a href={l.href} aria-current={currentPath === l.href ? "page" : undefined}>{l.label}</a>
+        ))}
       </div>
     </nav>
   </div>
@@ -31,6 +37,14 @@ const currentPath = Astro.url.pathname;
     </svg>
   </button>
 </header>
+
+<style>
+  /* Desktop order: brand, links, CTA. The links sit in the middle column. */
+  @media (min-width: 901px) {
+    .navlinks { grid-column: 2; grid-row: 1; }
+    .nav-cta { grid-column: 3; grid-row: 1; }
+  }
+</style>
 
 <script>
   const btn = document.getElementById("theme-toggle");

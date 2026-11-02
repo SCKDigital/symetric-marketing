@@ -4,18 +4,18 @@
    overrides them. See BaseLayout.astro for the before-paint theme script and
    Nav.astro for the toggle.
 
-   The dark values are the app's own. Source of truth is the native app,
-   symetric-native: src/constants/accents.ts for the brand, src/lib/domains.ts
-   for the domain colours, and docs/brand.md for why. If the app changes, change
-   these to match rather than the other way round. */
+   Colour direction "2b": off-white controls on a near-black ground, charcoal
+   bands to mark sections, and the app's own mind-domain colours as the only
+   accents. Each section borrows one (see --acc below), spread so all eight
+   appear about equally and none leads. No gradients anywhere.
+
+   The domain hexes are the app's (symetric-native src/lib/domains.ts). If the
+   app changes one, change it here. */
 :root {
-  /* Surfaces, from the app: the screen background, its cards, and the
-     slightly lifted panel it uses behind finished items. Page background <
-     elevated cards; the "artefact" panel (the report block) stays dark in both
-     themes. */
+  /* Surfaces: page < charcoal section band < card */
   --paper: #0A0C12;
-  --white: #141820;
-  --ink-panel: #0F1117;
+  --band: #10131A;
+  --card: #151922;
 
   /* Text */
   --ink: #E2E8F0;
@@ -26,90 +26,74 @@
   --rule: #252B3B;
   --dot: #2D3748;
 
-  /* On the always-dark ink-panel surface, constant across both themes since
-     that surface never inverts. */
-  --mute-on-dark: #8892A4;
-  --rule-on-dark: #2D3748;
+  /* Controls: off-white fill, near-black label, the app's porcelain pair */
+  --fill: #E7E2D9;
+  --fill-hover: #CFC7B6;
+  --on-fill: #0A0C12;
 
-  /* Brand: porcelain, the app's default accent since v1.5.0. It is the only
-     one of the app's three accents with no hue, so it can never be mistaken
-     for a domain colour. Porcelain inverts: a near-white fill carries a
-     near-black label, so a filled control reads --brand-fill / --on-brand,
-     never --brand with white text. --brand alone is accent TEXT (links, active
-     labels), which is a warm stone rather than the fill's off-white so a link
-     still looks like a link next to body copy. */
-  --brand: #C8B79A;
-  --brand-hover: #DACEB8;
-  --brand-fill: #E7E2D9;
-  --brand-fill-hover: #CFC7B6;
-  --on-brand: #0A0C12;
+  /* The base accent when a section has not chosen a domain colour */
+  --brand: #E7E2D9;
 
-  /* Porcelain as it sits on the always-dark report panel, in both themes. */
-  --brand-fill-on-dark: #E7E2D9;
-  --on-brand-on-dark: #0A0C12;
-
-  /* Motion */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Domain colours: the app's exact values. These identify a measurement,
-     not the brand, and must never be borrowed for chrome (or the other way
-     round, see docs/brand.md "The one rule"). Used at decorative scale
-     (borders, dots, chart lines) and once as running text, the coloured
-     domain word in the homepage timeline. */
+  /* Mind domain colours, the site's accents */
   --mood: #818CF8;
   --energy: #34D399;
   --anxiety: #FB923C;
   --concentration: #38BDF8;
-  /* Sleep has its own colour in the app, separate from the mind domains. */
+  --irritability: #F472B6;
+  --social: #A78BFA;
+  --sensory: #FBBF24;
+  --motivation: #C084FC;
   --sleep: #7B9EB8;
 
-  /* Fixed mockup surface: the report's "page" thumbnails are meant to read
-     as paper regardless of site theme. Named here rather than left as inline
-     hex in global.css so the mockup styling still traces back to the token
-     block. Ink, mute and rules are the PDF report's own print palette
-     (symetric-native src/lib/report/theme.ts). */
+  /* Report page images sit dimmed on dark so seven white pages don't glare */
+  --page-dim: brightness(0.82);
+
+  /* Fixed mockup surface for the report page's page thumbnails, which read
+     as paper in either theme. Ink, mute and rules are the PDF report's own
+     print palette (symetric-native src/lib/report/theme.ts). */
   --mockup-page-bg: #FFFFFF;
   --mockup-page-ink: #1F2937;
   --mockup-page-mute: #6B7280;
   --mockup-page-row: #D1D0C8;
 
-  /* Type: a single serif family carries both display and body, differentiated
-     by weight (400 body, 500 emphasis, 600 UI/buttons, 700 headings) rather
-     than by a second typeface. Mono is reserved for labels/kickers only.
-     The app itself has no brand typeface yet (it uses the system font), so
-     this is the site's own choice, not a mismatch with the app. */
-  --font-heading: "Source Serif 4", Georgia, serif;
-  --font-body: "Source Serif 4", Georgia, serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Type: one sans family, weight carries hierarchy. The app itself uses the
+     platform's system font; DM Sans was the original web app's face. */
+  --font: "DM Sans Variable", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-/* The app has no light theme, so these are the site's own: the same porcelain
-   family turned over for a light page. A near-white fill would vanish here,
-   so filled controls take porcelain's dark logo tile instead, and accent text
-   darkens to a stone that clears 4.5:1. Domain colours keep their hues, one
-   step darker, for the same reason the PDF report has its own print palette:
-   a colour picked for a near-black screen can disappear on white. */
+/* The app has no light theme, so this one is the site's own: the same roles
+   turned over, dark controls on warm paper, and each domain colour one step
+   darker on the same hue so text in it clears 4.5:1. */
 [data-theme="light"] {
-  --paper: #F0F1F5;
-  --white: #FBFBFE;
-  --ink-panel: #14161C;
+  --paper: #F7F5F1;
+  --band: #EFEBE3;
+  --card: #FFFFFF;
 
   --ink: #14161C;
   --ink-2: #2B2F3C;
   --mute: #565B6B;
 
-  --rule: #D3D6DE;
-  --dot: #C9CCD6;
+  --rule: #DDD7CC;
+  --dot: #CFC6B6;
 
-  --brand: #6B5B40;
-  --brand-hover: #5E5038;
-  --brand-fill: #2A251C;
-  --brand-fill-hover: #3A3229;
-  --on-brand: #EFEBE3;
+  --fill: #14161C;
+  --fill-hover: #2B2F3C;
+  --on-fill: #F7F5F1;
+
+  --brand: #14161C;
 
   --mood: #4F46E5;
   --energy: #047857;
-  --anxiety: #C2410C;
+  --anxiety: #B13A0A;
   --concentration: #0369A1;
+  --irritability: #BE185D;
+  --social: #6D28D9;
+  --sensory: #8F5605;
+  --motivation: #7E22CE;
   --sleep: #4A6B85;
+
+  --page-dim: none;
 }

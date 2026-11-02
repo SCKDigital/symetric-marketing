@@ -1,136 +1,112 @@
 ---
+import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { inline } from "../lib/inline";
 
-// The app's evening body check-in, in its own order (symetric-native
-// src/lib/body/constants.ts, CHECKIN_BODY_DOMAIN_ORDER). End-of-day exhaustion
-// is the required one, so it stays last here as it does in the app.
-const bodyDomains = [
-  "fatigue across the day",
-  "joint and muscle pain",
-  "widespread pain",
-  "joint instability",
-  "breathing (air hunger, breathless on effort, a tight chest)",
-  "dizziness (lightheaded, heart racing, greying out on standing)",
-  "gut (nausea, bloating, cramping)",
-  "brain fog",
-  "end-of-day exhaustion",
-];
+// The words are in src/content/tracks/what-it-tracks.md (edited in Tina).
+// The body domain list there follows the app's evening check-in order
+// (symetric-native src/lib/body/constants.ts, CHECKIN_BODY_DOMAIN_ORDER).
+const entry = await getEntry("tracks", "what-it-tracks");
+if (!entry) throw new Error("src/content/tracks/what-it-tracks.md is missing");
+const c = entry.data;
 
-const bodyEvents = [
-  "a joint going out",
-  "nearly fainting",
-  "a migraine starting",
-  "a crash",
-  "a reaction",
-  "an injury or strain",
-  "palpitations",
-];
-
+// Each mind domain shown in its own colour, the only place on the site where
+// a colour sits next to the name it stands for. These are the app's names,
+// not copy, so they stay in code.
 const mindDomains = [
-  "mood",
-  "energy",
-  "anxiety",
-  "concentration",
-  "irritability",
-  "social depletion",
-  "sensory overwhelm",
-  "motivation",
-];
-
-const tiers = [
-  { name: "Mind", status: "Always on", on: true },
-  { name: "Sleep", status: "Always on", on: true },
-  { name: "Body", status: "Optional", on: false },
-  { name: "Cycle", status: "Optional", on: false },
+  { name: "Mood", c: "var(--mood)" },
+  { name: "Energy", c: "var(--energy)" },
+  { name: "Anxiety", c: "var(--anxiety)" },
+  { name: "Concentration", c: "var(--concentration)" },
+  { name: "Irritability", c: "var(--irritability)" },
+  { name: "Social depletion", c: "var(--social)" },
+  { name: "Sensory overwhelm", c: "var(--sensory)" },
+  { name: "Motivation", c: "var(--motivation)" },
 ];
 ---
 
-<BaseLayout
-  title="symetric: What it tracks"
-  description="Mind and sleep are the core, always on. Body and day-1 cycle logging are optional. Here's exactly what each one covers, and what symetric deliberately doesn't do."
->
+<BaseLayout title={c.seoTitle} description={c.seoDescription}>
   <div class="shell">
-    <section class="hero pb-tight tracks-hero">
-      <div class="tracks-hero-text">
-        <p class="kicker">What it tracks</p>
-        <h1 style="max-width:20ch">Two things are always on. Two more are there if you need them.</h1>
-        <p class="lede">symetric started as a mind tracker, and mind and sleep are still the core of what it does. Body and day-1 cycle logging are optional additions, for people who want more context alongside it.</p>
+    <section class="page-head acc-energy" style="max-width:none">
+      <div class="grid-2" style="gap:48px;align-items:center">
+        <div>
+          <p class="eyebrow">{c.eyebrow}</p>
+          <h1>{c.heading}</h1>
+          <p class="lede" set:html={inline(c.lede)} />
+        </div>
+        <div class="card" style="padding:6px 24px" aria-label="What symetric can track, and whether each is always on or optional">
+          {c.tiers.map((t) => (
+            <div class="tier">
+              <b>{t.name}</b>
+              <span class={`badge ${t.on ? "badge-on" : ""}`}>{t.status}</span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div class="tier-glance" aria-label="The four things symetric can track, and whether each is always on or optional">
-        {tiers.map((t) => (
-          <div class="tier-row">
-            <span class="tier-name">{t.name}</span>
-            <span class={`tier-badge ${t.on ? "tier-badge--on" : "tier-badge--optional"}`}>{t.status}</span>
+    </section>
+
+    <!-- ============ MIND + SLEEP ============ -->
+    <section class="sec acc-concentration" aria-labelledby="core-h">
+      <p class="eyebrow">{c.core.eyebrow}</p>
+      <h2 id="core-h">{c.core.heading}</h2>
+      <div class="grid-2" style="margin-top:32px">
+        <div class="card acc-mood">
+          <i class="mark"></i>
+          <h3>{c.core.mindTitle}</h3>
+          <p set:html={inline(c.core.mindText)} />
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:16px">
+            {mindDomains.map((d) => (
+              <span class="chip" style="display:inline-flex;align-items:center;gap:7px"><i style={`width:8px;height:8px;border-radius:4px;background:${d.c}`}></i>{d.name}</span>
+            ))}
           </div>
-        ))}
-      </div>
-    </section>
-  </div>
-
-  <!-- ============ MIND + SLEEP (the core, paired) ============ -->
-  <div class="shell">
-    <section class="sec" aria-labelledby="core-h">
-      <p class="sec-label">The core</p>
-      <h2 id="core-h">Mind and sleep. Always on.</h2>
-      <div class="core-pair mt-xl">
-        <div>
-          <h3>Mind</h3>
-          <p class="mt-md muted">Where symetric started, and still the centre of what it does. 8 domains: {mindDomains.join(", ")}. <b>Pick 2 of them or all 8, and change your mind whenever you like.</b> Three check-ins a day by default, 30 seconds each, inside a window you set.</p>
         </div>
-        <div>
-          <h3>Sleep</h3>
-          <p class="mt-md muted">Separate from the 8 domains, not something you switch on or off. Once a day: how did you sleep last night, and how many hours, if you want to log that part too, it&rsquo;s optional. <b>Skip it on the days you need to.</b></p>
+        <div class="card acc-sleep">
+          <i class="mark"></i>
+          <h3>{c.core.sleepTitle}</h3>
+          <p set:html={inline(c.core.sleepText)} />
         </div>
       </div>
-      <p class="big-quiet mt-2xl muted">Most trackers make you choose: broad enough to cover everything that&rsquo;s going on, or simple enough to stick with. <b>You tell symetric what matters once, in under a minute, and it stays that light every day after</b>, however many domains you&rsquo;re tracking.</p>
+      <p class="muted" style="font-size:20px;line-height:1.5;max-width:34em;margin-top:40px" set:html={inline(c.core.quiet)} />
     </section>
-  </div>
 
-  <!-- ============ BODY ============ -->
-  <div class="shell">
-    <section class="sec pt-tight" aria-labelledby="body-h">
-      <p class="sec-label">Optional</p>
-      <h2 id="body-h">Body.</h2>
-      <p class="mt-lg muted"><b>If joint instability, standing up feeling faint, or persistent exhaustion are part of your picture</b>, alongside the mind side or instead of it, this is where that goes. Turn it on at signup or later in Settings.</p>
-      <div class="plain mt-xl">
+    <!-- ============ BODY ============ -->
+    <section class="panel acc-anxiety" aria-labelledby="body-h" style="margin-top:96px">
+      <p class="eyebrow">{c.body.eyebrow}</p>
+      <h2 id="body-h">{c.body.heading}</h2>
+      <p class="muted" style="margin-top:16px;max-width:40em" set:html={inline(c.body.intro)} />
+      <div class="plain" style="margin-top:28px">
         <div class="line">
-          <span class="tick yes" aria-hidden="true">✓</span>
-          <span class="txt"><b>{bodyDomains.length} domains you can check in on:</b> {bodyDomains.join(", ")}. End-of-day exhaustion is the one required question once body tracking is on, it asks each evening. Pick whichever of the rest apply to you. There&rsquo;s an optional morning check-in too, where you choose up to four of them to answer first thing.</span>
+          <span class="tick" aria-hidden="true">✓</span>
+          <span class="txt"><b>{c.body.domains.length} domains you can check in on:</b> {c.body.domains.join(", ")}. <Fragment set:html={inline(c.body.domainsNote)} /></span>
         </div>
         <div class="line">
-          <span class="tick yes" aria-hidden="true">✓</span>
-          <span class="txt"><b>{bodyEvents.length} events you can log as they happen:</b> {bodyEvents.join(", ")}.</span>
+          <span class="tick" aria-hidden="true">✓</span>
+          <span class="txt"><b>{c.body.events.length} events you can log as they happen:</b> {c.body.events.join(", ")}.</span>
         </div>
         <div class="line">
-          <span class="tick yes" aria-hidden="true">✓</span>
-          <span class="txt"><b>Where it hurt, and what it felt like.</b> Mark pain or instability on a body map, and describe pain in words, aching, burning, shooting, because a 6 that aches and a 6 that burns aren&rsquo;t the same thing to a clinician.</span>
+          <span class="tick" aria-hidden="true">✓</span>
+          <span class="txt"><b>{c.body.mapTitle}</b> <Fragment set:html={inline(c.body.mapText)} /></span>
         </div>
       </div>
-      <p class="mt-xl muted">Body tracking is newer than mind, and we&rsquo;re still refining it. Everything above works now, but expect it to keep changing.</p>
+      <p class="fine" style="margin-top:20px" set:html={inline(c.body.note)} />
     </section>
-  </div>
 
-  <!-- ============ CYCLE ============ -->
-  <div class="shell">
-    <section class="sec pt-tight" aria-labelledby="cycle-h">
-      <p class="sec-label">Optional, for context</p>
-      <h2 id="cycle-h">Day 1. Nothing more.</h2>
-      <p class="mt-lg muted">Log Day 1, the date your period starts, whenever it happens. That's the only thing you enter. From that, symetric shows a simple running count: Day 13, Day 24, however many days since your last Day 1. Log the next Day 1, and it resets.</p>
-      <div class="cycle-callout mt-xl">
-        <p>That&rsquo;s all it does. It doesn&rsquo;t predict your next period, estimate a phase, or draw conclusions from the date.</p>
-        <p class="mt-md">Plenty of apps will tell you what phase you're probably in. symetric just tells you how many days it's been, so you and your clinician have that context, <b>not a guess dressed up as one</b>.</p>
+    <!-- ============ CYCLE ============ -->
+    <section class="sec acc-irritability" aria-labelledby="cycle-h">
+      <p class="eyebrow">{c.cycle.eyebrow}</p>
+      <h2 id="cycle-h">{c.cycle.heading}</h2>
+      <p class="muted" style="margin-top:16px;max-width:40em" set:html={inline(c.cycle.text)} />
+      <div class="cycle-callout" style="margin-top:24px;max-width:46em">
+        {c.cycle.callout.map((p) => <p set:html={inline(p)} />)}
       </div>
     </section>
-  </div>
 
-  <!-- ============ CLOSE ============ -->
-  <div class="shell">
-    <section class="close pt-tight" aria-labelledby="close-h">
-      <h2 id="close-h">Start with mind. Add the rest if it helps.</h2>
+    <!-- ============ CLOSE ============ -->
+    <section class="closing acc-motivation" aria-labelledby="close-h">
+      <h2 id="close-h">{c.closing.heading}</h2>
       <div class="cta-row">
-        <!-- TODO: real App Store and Google Play listing URLs not available yet -->
-        <a class="btn btn-primary" href="#">Get symetric</a>
-        <a class="btn btn-ghost" href="/report">Read the sample report</a>
+        <a class="btn btn-primary" href="/#demo">{c.closing.tryLabel}</a>
+        <a class="btn btn-ghost" href="/report">{c.closing.reportLabel}</a>
       </div>
     </section>
   </div>

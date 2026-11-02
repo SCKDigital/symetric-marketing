@@ -6,9 +6,8 @@ This repo is the site only, it does not contain the app.
 ## Stack
 
 Astro, TypeScript, plain CSS with custom properties (`src/styles/tokens.css`),
-Fontsource self-hosted fonts, Markdown content collections for the long-form
-pages. No client-side JavaScript except the hero check-in grid
-(`src/scripts/checkin-grid.js`).
+Fontsource self-hosted DM Sans, Markdown content collections for the long-form
+pages. No client-side JavaScript except the theme toggle.
 
 ## Commands
 
