@@ -10,9 +10,9 @@ if (grid) {
   // is one colour throughout, so "a Wednesday pattern" reads as one recurring
   // signal, not four unrelated days that happen to share a row.
   const groups = [
-    { color: "#7C7FE8", days: [22, 23, 24, 25, 26] }, // a run of low weeks
-    { color: "#DD8734", days: [39, 46, 53, 60] }, // same weekday, four weeks running
-    { color: "#3FA9E8", days: [78] }, // the day everything dropped at once
+    { color: "var(--mood)", days: [22, 23, 24, 25, 26] }, // a run of low weeks
+    { color: "var(--anxiety)", days: [39, 46, 53, 60] }, // same weekday, four weeks running
+    { color: "var(--concentration)", days: [78] }, // the day everything dropped at once
   ];
   const found = {};
   groups.forEach((group) => {

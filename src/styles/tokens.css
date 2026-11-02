@@ -2,63 +2,93 @@
    Dark is the default (the audience is sensitive to bright screens,
    especially in the evening). :root holds the dark values; [data-theme="light"]
    overrides them. See BaseLayout.astro for the before-paint theme script and
-   Nav.astro for the toggle. */
+   Nav.astro for the toggle.
+
+   The dark values are the app's own. Source of truth is the native app,
+   symetric-native: src/constants/accents.ts for the brand, src/lib/domains.ts
+   for the domain colours, and docs/brand.md for why. If the app changes, change
+   these to match rather than the other way round. */
 :root {
-  /* Surfaces: page background < elevated cards < recessed "artefact" panels
-     (the report panel, phone-mockup screenshots) */
-  --paper: #14161C;
-  --white: #1E212B;
-  --ink-panel: #0B0C10;
+  /* Surfaces, from the app: the screen background, its cards, and the
+     slightly lifted panel it uses behind finished items. Page background <
+     elevated cards; the "artefact" panel (the report block) stays dark in both
+     themes. */
+  --paper: #0A0C12;
+  --white: #141820;
+  --ink-panel: #0F1117;
 
   /* Text */
-  --ink: #EDEEF2;
-  --ink-2: #C3C7D4;
-  --mute: #9AA0B4;
+  --ink: #E2E8F0;
+  --ink-2: #B0B8C8;
+  --mute: #8892A4;
 
   /* Lines */
-  --rule: #33384A;
-  --dot: #363B4A;
+  --rule: #252B3B;
+  --dot: #2D3748;
 
-  /* On the always-dark ink-panel/phone-mockup surfaces, constant across
-     both themes since those surfaces never invert. */
-  --mute-on-dark: #8B90A0;
-  --rule-on-dark: #4A4F63;
+  /* On the always-dark ink-panel surface, constant across both themes since
+     that surface never inverts. */
+  --mute-on-dark: #8892A4;
+  --rule-on-dark: #2D3748;
 
-  /* Brand: brightened here for legibility as text against a dark page,
-     button-fill contrast (white text on top) isn't affected either way. */
-  --brand: #7B7EF0;
-  --brand-hover: #9294F5;
+  /* Brand: porcelain, the app's default accent since v1.5.0. It is the only
+     one of the app's three accents with no hue, so it can never be mistaken
+     for a domain colour. Porcelain inverts: a near-white fill carries a
+     near-black label, so a filled control reads --brand-fill / --on-brand,
+     never --brand with white text. --brand alone is accent TEXT (links, active
+     labels), which is a warm stone rather than the fill's off-white so a link
+     still looks like a link next to body copy. */
+  --brand: #C8B79A;
+  --brand-hover: #DACEB8;
+  --brand-fill: #E7E2D9;
+  --brand-fill-hover: #CFC7B6;
+  --on-brand: #0A0C12;
+
+  /* Porcelain as it sits on the always-dark report panel, in both themes. */
+  --brand-fill-on-dark: #E7E2D9;
+  --on-brand-on-dark: #0A0C12;
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Domain colours: deliberately constant across both themes. They're used
-     at decorative scale (borders, dots, chart bars), including inside the
-     always-white "page" mockups and always-dark phone mockups, so a single
-     value that reads fine on both light and dark keeps those consistent
-     rather than needing separate light/dark variants for each context. */
-  --mood: #7C7FE8;
-  --energy: #2FBF8B;
-  --anxiety: #DD8734;
-  --concentration: #3FA9E8;
+  /* Domain colours: the app's exact values. These identify a measurement,
+     not the brand, and must never be borrowed for chrome (or the other way
+     round, see docs/brand.md "The one rule"). Used at decorative scale
+     (borders, dots, chart lines) and once as running text, the coloured
+     domain word in the homepage timeline. */
+  --mood: #818CF8;
+  --energy: #34D399;
+  --anxiety: #FB923C;
+  --concentration: #38BDF8;
+  /* Sleep has its own colour in the app, separate from the mind domains. */
+  --sleep: #7B9EB8;
 
   /* Fixed mockup surface: the report's "page" thumbnails are meant to read
-     as paper regardless of site theme, same reasoning as the domain colours
-     above. Named here rather than left as inline hex in global.css so the
-     mockup styling still traces back to the token block. */
+     as paper regardless of site theme. Named here rather than left as inline
+     hex in global.css so the mockup styling still traces back to the token
+     block. Ink, mute and rules are the PDF report's own print palette
+     (symetric-native src/lib/report/theme.ts). */
   --mockup-page-bg: #FFFFFF;
-  --mockup-page-ink: #1B1E28;
-  --mockup-page-mute: #8A90A0;
-  --mockup-page-row: #DDE0E8;
+  --mockup-page-ink: #1F2937;
+  --mockup-page-mute: #6B7280;
+  --mockup-page-row: #D1D0C8;
 
   /* Type: a single serif family carries both display and body, differentiated
      by weight (400 body, 500 emphasis, 600 UI/buttons, 700 headings) rather
-     than by a second typeface. Mono is reserved for labels/kickers only. */
+     than by a second typeface. Mono is reserved for labels/kickers only.
+     The app itself has no brand typeface yet (it uses the system font), so
+     this is the site's own choice, not a mismatch with the app. */
   --font-heading: "Source Serif 4", Georgia, serif;
   --font-body: "Source Serif 4", Georgia, serif;
   --font-mono: "IBM Plex Mono", monospace;
 }
 
+/* The app has no light theme, so these are the site's own: the same porcelain
+   family turned over for a light page. A near-white fill would vanish here,
+   so filled controls take porcelain's dark logo tile instead, and accent text
+   darkens to a stone that clears 4.5:1. Domain colours keep their hues, one
+   step darker, for the same reason the PDF report has its own print palette:
+   a colour picked for a near-black screen can disappear on white. */
 [data-theme="light"] {
   --paper: #F0F1F5;
   --white: #FBFBFE;
@@ -71,6 +101,15 @@
   --rule: #D3D6DE;
   --dot: #C9CCD6;
 
-  --brand: #5A5DE0;
-  --brand-hover: #4A4DD2;
+  --brand: #6B5B40;
+  --brand-hover: #5E5038;
+  --brand-fill: #2A251C;
+  --brand-fill-hover: #3A3229;
+  --on-brand: #EFEBE3;
+
+  --mood: #4F46E5;
+  --energy: #047857;
+  --anxiety: #C2410C;
+  --concentration: #0369A1;
+  --sleep: #4A6B85;
 }

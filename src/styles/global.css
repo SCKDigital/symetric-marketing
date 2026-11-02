@@ -65,8 +65,8 @@ img { max-width: 100%; display: block; }
   top: -60px;
   /* Fixed dark-chip/light-text regardless of site theme, not var(--ink)/
      var(--white), which invert with the theme and would break this. */
-  background: #14161C;
-  color: #EDEEF2;
+  background: #0A0C12;
+  color: #E2E8F0;
   padding: 10px 18px;
   border-radius: 4px;
   font-family: var(--font-heading);
@@ -253,20 +253,23 @@ button:focus-visible,
   font-size: 16px;
   font-weight: 600;
   padding: 13px 22px;
-  border-radius: 100px;
+  /* 8, not a capsule: the app's one specified control radius since v1.4.0
+     (docs/brand.md, Shape). */
+  border-radius: 8px;
   text-decoration: none;
   border: 1px solid transparent;
   white-space: nowrap;
   transition: transform .12s var(--ease-out), background .15s var(--ease-out);
   cursor: pointer;
 }
-.btn-primary { background: var(--brand); color: #fff; }
-.btn-primary:hover { background: var(--brand-hover); }
+.btn-primary { background: var(--brand-fill); color: var(--on-brand); }
+.btn-primary:hover { background: var(--brand-fill-hover); }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
 .btn-ghost:hover { border-color: var(--ink); }
 /* Always sits on the report panel, which stays dark regardless of site
-   theme, so this needs fixed dark text, not the theme-relative var(--ink). */
-.btn-light { background: #fff; color: #14161C; }
+   theme, so it takes the on-dark porcelain pair rather than the
+   theme-relative brand fill, which turns dark in light mode. */
+.btn-light { background: var(--brand-fill-on-dark); color: var(--on-brand-on-dark); }
 .btn:active { transform: translateY(1px); }
 
 /* ---------- hero ---------- */
@@ -402,10 +405,10 @@ h1 {
   letter-spacing: .08em;
   text-transform: uppercase;
   padding: 5px 11px;
-  border-radius: 100px;
+  border-radius: 8px;
   border: 1px solid transparent;
 }
-.tier-badge--on { background: var(--brand); color: #fff; }
+.tier-badge--on { background: var(--brand-fill); color: var(--on-brand); }
 .tier-badge--optional { background: transparent; color: var(--mute); border-color: var(--rule); }
 
 /* ---------- generic section ---------- */
@@ -520,14 +523,14 @@ h2 {
 /* report block */
 .report {
   background: var(--ink-panel);
-  color: #EDEEF2;
+  color: #E2E8F0;
   border-radius: 6px;
   padding: 36px 26px 32px;
   margin-top: 8px;
 }
-.report .sec-label { border-top-color: #33384A; color: #9AA0B4; }
+.report .sec-label { border-top-color: var(--rule-on-dark); color: var(--mute-on-dark); }
 .report h2 { color: #fff; }
-.report p { color: #C3C7D4; }
+.report p { color: #B0B8C8; }
 .report p b { color: #fff; }
 .finding { margin: 26px 0 6px; }
 .finding-chart { position: relative; padding-top: 46px; }
@@ -546,21 +549,21 @@ h2 {
   font-weight: 600;
   font-size: 13px;
   line-height: 1.3;
-  color: #EDEEF2;
+  color: #E2E8F0;
   text-align: center;
 }
 .finding-caption-text { margin: 10px 0 0; font-family: var(--font-mono); font-size: 11px; color: var(--mute-on-dark); }
 .finding-stats { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
 .finding-stat { font-family: var(--font-mono); font-size: 12px; color: var(--mute-on-dark); }
-.finding-stat-value { font-size: 20px; font-weight: 600; color: #EDEEF2; }
+.finding-stat-value { font-size: 20px; font-weight: 600; color: #E2E8F0; }
 .finding-confidence {
   font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: .06em;
   padding: 4px 10px;
-  border-radius: 100px;
-  background: var(--brand);
-  color: #fff;
+  border-radius: 8px;
+  background: var(--brand-fill-on-dark);
+  color: var(--on-brand-on-dark);
 }
 .pages {
   display: flex;
@@ -618,7 +621,7 @@ h2 {
 .core-pair { display: grid; gap: 28px; grid-template-columns: 1fr; }
 @media (min-width: 640px) { .core-pair { grid-template-columns: 1fr 1fr; gap: 40px; } }
 .core-pair > div { padding-top: 16px; border-top: 3px solid var(--c, var(--mood)); }
-.core-pair > div:last-child { --c: var(--energy); }
+.core-pair > div:last-child { --c: var(--sleep); }
 .core-pair h3 { font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin: 0; }
 
 /* cycle callout (what-it-tracks) */
@@ -694,7 +697,7 @@ h2 {
   flex: 1 1 220px;
   min-width: 0;
   padding: 13px 18px;
-  border-radius: 100px;
+  border-radius: 8px;
   border: 1px solid var(--rule);
   background: var(--white);
   color: var(--ink);
@@ -825,9 +828,9 @@ div.stub-body p { max-width: none; }
    this, .stub-body a (class+element) outranks .btn-primary/.btn-ghost
    (single class) by specificity and every button loses its intended
    colour, invisible white-on-brand text for the primary button. */
-.stub-body a.btn-primary { color: #fff; }
+.stub-body a.btn-primary { color: var(--on-brand); }
 .stub-body a.btn-ghost { color: var(--ink); }
-.stub-body a.btn-light { color: #14161C; }
+.stub-body a.btn-light { color: var(--on-brand-on-dark); }
 /* The "In short:" line under every legal-doc heading is its own paragraph
    whose only content is the em, that's what :only-child targets, so this
    doesn't also catch genuine inline emphasis mid-sentence elsewhere. It
@@ -862,7 +865,7 @@ div.stub-body p { max-width: none; }
   letter-spacing: .04em;
   padding: 6px 12px;
   border: 1px solid var(--rule);
-  border-radius: 100px;
+  border-radius: 8px;
   color: var(--ink-2);
 }
 
