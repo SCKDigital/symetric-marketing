@@ -57,11 +57,14 @@ You do not have to use symetric, and you do not have to enter any particular pie
 - Your notification preferences, including any do-not-disturb hours you set
 
 ### Health information you enter
-- **Daily scores** across eight areas: mood, energy, anxiety, concentration, irritability, social battery, sensory sensitivity, and motivation
-- **Baseline scores** you provide when you first set up the app
-- **Check-in details**: when you completed each check-in, whether you used quick or full mode, whether you used the late-completion window, and whether you later edited an entry (including the number of edits and when they were made)
-- **Sleep**: a daily sleep score and whether you felt rested
-- **Treatment and life context**: medication events you record (starting, stopping, increasing or decreasing a medication `[TODO: confirm whether the medication name itself is captured if entered]`), therapy sessions, and significant life events
+- **Daily scores** across the mind areas you choose, from: mood, energy, anxiety, concentration, irritability, social depletion, sensory overwhelm, and motivation
+- **Baseline values** for each area, which start at a neutral placeholder and are then calculated from your own check-ins
+- **Check-in details**: when you completed each check-in, whether you logged it in one tap as "nothing unusual", whether you used the late-completion window, and whether you later edited an entry (including the number of edits and when they were made)
+- **Sleep**: a daily sleep rating and, if you choose to add it, hours slept
+- **Body tracking**, only if you turn it on: scores for the physical symptoms you choose (such as fatigue, pain, joint instability, dizziness, breathing, gut symptoms and brain fog), optional morning scores, where on your body pain or instability occurred, words you choose to describe pain or breathlessness, events you log (such as a joint going out, nearly fainting or palpitations), and any notes you add
+- **Cycle tracking**, only if you turn it on: the dates you log as Day 1 of your period
+- **Preferences** that shape how the app looks and behaves, such as comfort mode, your accent colour and whether app lock is on. If you set an app-lock PIN, we store a salted hash of it, never the PIN itself
+- **Treatment and life context**: medication events you record (starting, stopping, increasing or decreasing a medication), therapy sessions, and significant life events. Each one has a short free-text label you write yourself, so if you type a medication name into it, that name is stored with the entry
 - **Appointment information**: appointment dates, the questions you prepare, which patterns you mark for discussion, and any notes you record after the appointment
 
 ### Information we generate about you
@@ -125,7 +128,7 @@ We do not sell or rent your information. We share it only with the service provi
 
 **Your health information is stored in Australia.** Supabase is a company based overseas, and its personnel may access our systems from outside Australia for support and maintenance purposes. `[TODO: confirm backup region]`
 
-Our analytics provider, PostHog, processes data in the European Union. `[TODO: confirm we do not send any health scores, entries or generated patterns to PostHog, only events such as "check-in completed", with no health values attached]`
+Our analytics provider, PostHog, processes data in the European Union. `[TODO: confirm we do not send any health scores, entries or generated patterns to PostHog, only events such as "check-in completed", with no health values attached]` `[TODO: the current iOS and Android app sends no analytics at all (symetric-native src/lib/analytics.ts is a stub). Either remove PostHog from this policy, or wire it up with the in-app opt-out section 14 promises before this goes live.]`
 
 Where we disclose information overseas, we take reasonable steps to ensure recipients handle it consistently with the Australian Privacy Principles, including through written data processing agreements.
 

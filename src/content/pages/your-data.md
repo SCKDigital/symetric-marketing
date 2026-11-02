@@ -29,11 +29,15 @@ Plenty of apps say "your data never leaves your phone" when it isn't quite true.
   </div>
   <div class="line">
     <span class="tick yes" aria-hidden="true">&check;</span>
-    <span class="txt"><b>We collect basic usage analytics, never your entries.</b> Things like which screens you open, not your scores or check-in content, go to our analytics provider (PostHog, processed in the EU) so we can see what's actually used. You can opt out any time in Settings.</span>
+    <span class="txt"><b>No usage analytics, at the moment.</b> The app doesn&rsquo;t currently send any. If that changes, it will be things like which screens are opened, never your scores or check-in content, the privacy policy will say so first, and you&rsquo;ll be able to opt out.</span>
   </div>
   <div class="line">
     <span class="tick yes" aria-hidden="true">&check;</span>
     <span class="txt"><b>You can take it or delete it at any time.</b> Full export as CSV or JSON, delete any date range, or reset your baseline when your normal genuinely changes.</span>
+  </div>
+  <div class="line">
+    <span class="tick yes" aria-hidden="true">&check;</span>
+    <span class="txt"><b>Lock it with a PIN if you want to.</b> An optional app lock means someone picking up your phone still can&rsquo;t open symetric.</span>
   </div>
 </div>
 

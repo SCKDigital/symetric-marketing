@@ -1,12 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+// The app's evening body check-in, in its own order (symetric-native
+// src/lib/body/constants.ts, CHECKIN_BODY_DOMAIN_ORDER). End-of-day exhaustion
+// is the required one, so it stays last here as it does in the app.
 const bodyDomains = [
-  "fatigue",
-  "pain",
+  "fatigue across the day",
+  "joint and muscle pain",
+  "widespread pain",
   "joint instability",
-  "standing up (feeling lightheaded, or like you might grey out)",
+  "breathing (air hunger, breathless on effort, a tight chest)",
+  "dizziness (lightheaded, heart racing, greying out on standing)",
   "gut (nausea, bloating, cramping)",
+  "brain fog",
   "end-of-day exhaustion",
 ];
 
@@ -16,7 +22,8 @@ const bodyEvents = [
   "a migraine starting",
   "a crash",
   "a reaction",
-  "an injury",
+  "an injury or strain",
+  "palpitations",
 ];
 
 const mindDomains = [
@@ -68,34 +75,38 @@ const tiers = [
       <div class="core-pair mt-xl">
         <div>
           <h3>Mind</h3>
-          <p class="mt-md muted">Where symetric started, and still the centre of what it does. 8 domains: {mindDomains.join(", ")}. <b>Pick 2 of them or all 8, and change your mind whenever you like.</b> A few check-ins a day, 30 seconds each, inside a window you set.</p>
+          <p class="mt-md muted">Where symetric started, and still the centre of what it does. 8 domains: {mindDomains.join(", ")}. <b>Pick 2 of them or all 8, and change your mind whenever you like.</b> Three check-ins a day by default, 30 seconds each, inside a window you set.</p>
         </div>
         <div>
           <h3>Sleep</h3>
           <p class="mt-md muted">Separate from the 8 domains, not something you switch on or off. Once a day: how did you sleep last night, and how many hours, if you want to log that part too, it&rsquo;s optional. <b>Skip it on the days you need to.</b></p>
         </div>
       </div>
-      <p class="big-quiet mt-2xl muted">Every tracker like this forces a trade: broad enough to cover everything that&rsquo;s actually going on for you, or simple enough to actually stick with, rarely both. The broad ones make you configure your way out of overwhelm after you&rsquo;ve already signed up. The simple ones only work if there&rsquo;s just one thing to track. <b>symetric doesn&rsquo;t trade.</b> You tell it what matters once, in under a minute, and it stays that light every single day after, no matter how many domains you&rsquo;re juggling. That&rsquo;s not a feature, it&rsquo;s the whole bet: small enough to actually use, and still big enough to bring real evidence to a clinician.</p>
+      <p class="big-quiet mt-2xl muted">Most trackers make you choose: broad enough to cover everything that&rsquo;s going on, or simple enough to stick with. <b>You tell symetric what matters once, in under a minute, and it stays that light every day after</b>, however many domains you&rsquo;re tracking.</p>
     </section>
   </div>
 
   <!-- ============ BODY ============ -->
   <div class="shell">
     <section class="sec pt-tight" aria-labelledby="body-h">
-      <p class="sec-label">Optional, and still new</p>
+      <p class="sec-label">Optional</p>
       <h2 id="body-h">Body.</h2>
-      <p class="mt-lg muted">Body tracking is optional, turned on at signup or later in Settings, and it's newer than mind. We're still refining it, so treat it as available now, not as a finished, established feature yet.</p>
+      <p class="mt-lg muted"><b>If joint instability, standing up feeling faint, or persistent exhaustion are part of your picture</b>, alongside the mind side or instead of it, this is where that goes. Turn it on at signup or later in Settings.</p>
       <div class="plain mt-xl">
         <div class="line">
           <span class="tick yes" aria-hidden="true">✓</span>
-          <span class="txt"><b>6 domains you can check in on:</b> {bodyDomains.join(", ")}. End-of-day exhaustion is the one required check-in once body tracking is on, it asks each evening. Everything else is optional, and there's an optional morning check-in too.</span>
+          <span class="txt"><b>{bodyDomains.length} domains you can check in on:</b> {bodyDomains.join(", ")}. End-of-day exhaustion is the one required question once body tracking is on, it asks each evening. Pick whichever of the rest apply to you. There&rsquo;s an optional morning check-in too, where you choose up to four of them to answer first thing.</span>
         </div>
         <div class="line">
           <span class="tick yes" aria-hidden="true">✓</span>
-          <span class="txt"><b>6 events you can log as they happen:</b> {bodyEvents.join(", ")}.</span>
+          <span class="txt"><b>{bodyEvents.length} events you can log as they happen:</b> {bodyEvents.join(", ")}.</span>
+        </div>
+        <div class="line">
+          <span class="tick yes" aria-hidden="true">✓</span>
+          <span class="txt"><b>Where it hurt, and what it felt like.</b> Mark pain or instability on a body map, and describe pain in words, aching, burning, shooting, because a 6 that aches and a 6 that burns aren&rsquo;t the same thing to a clinician.</span>
         </div>
       </div>
-      <p class="mt-xl muted"><b>If joint instability, standing up feeling faint, or persistent exhaustion are part of your picture</b>, alongside the mind side or instead of it, this is for adding that context.</p>
+      <p class="mt-xl muted">Body tracking is newer than mind, and we&rsquo;re still refining it. Everything above works now, but expect it to keep changing.</p>
     </section>
   </div>
 

@@ -20,7 +20,7 @@ Everything logged is self reported, on a schedule the patient sets rather than o
 
 **Sleep.** Logged once daily regardless of which mind domains are selected: a subjective sleep quality rating plus an optional hours slept figure.
 
-**Body domains (optional).** Six symptom domains (fatigue, pain, joint instability, orthostatic symptoms, gut symptoms, end of day exhaustion) and six loggable events (joint subluxation, presyncope episode, migraine onset, crash, reaction, injury), for patients who opt in.
+**Body domains (optional).** Nine symptom domains (fatigue across the day, joint and muscle pain, widespread pain, joint instability, breathlessness, orthostatic symptoms, gut symptoms, brain fog, end of day exhaustion) and seven loggable events (joint subluxation, presyncope episode, migraine onset, crash, reaction, injury or strain, palpitations), for patients who opt in. End of day exhaustion is asked every evening; the rest are chosen by the patient, and an optional morning check-in repeats up to four of them on waking so morning and evening readings can be compared. Pain and instability can be located on a body map, and pain and breathlessness described with character words (for example aching, burning, electric or shooting), which the report lists by date alongside the scores.
 
 **Day 1 cycle logging (optional).** The date a period starts, and nothing else. The app counts days since that date and resets on the next entry. It does not estimate cycle phase and does not predict a next date.
 
@@ -48,7 +48,7 @@ This is a deliberate alignment with the idiographic tradition in intensive longi
 
 The baseline is calculated as a **median** of the patient's own recent scores, rather than a mean, deliberately. A mean is dragged by a single severe flare day; a median largely ignores it. In populations where day to day symptom variability is high and a very bad day is a routine rather than exceptional event, this matters. Within person variability in fatigue, pain, dizziness and cognitive symptoms is substantial and well documented in long COVID [3], and momentary sampling in people with a history of COVID-19 infection detects real world ache and fatigue attributable to long COVID rather than to baseline mental health [9]. A measure of central tendency that is sensitive to single extreme values would misrepresent that population's typical state.
 
-Baselines update on a rolling basis as new data comes in, so they stay current without being reset by any single day. A new patient's first baseline comes from their own self rating during onboarding, and is superseded by their real check in history once enough of it exists.
+Baselines update on a rolling basis as new data comes in, so they stay current without being reset by any single day. A new patient is not asked to estimate their own baseline: each domain starts from a neutral placeholder, which is superseded by their real check in history once enough of it exists. An estimate made before anything has been logged was found to produce a number no one could stand behind.
 
 ---
 
@@ -59,6 +59,8 @@ The app looks for a small number of well established shapes in a patient's own l
 Two things are worth being precise about.
 
 **Every pattern must clear a data sufficiency bar before it is ever shown.** Missing data in EMA is not missing at random. A recent meta-analysis update covering 285 samples and more than 17,000 participants found compliance averaging around 72%, declining over time, and varying systematically with participant characteristics and study design, such that non-response is itself informative and biases naive analyses [15]. Compliance also declines as protocols lengthen and intensify [4], and is predicted by momentary stress and low mood [5]. In a fatiguing illness this is not a marginal effect: data density falls exactly when symptoms are worst, which is exactly when the data would matter most. symetric responds to this by suppressing rather than reporting. A pattern that is real but under logged is withheld entirely rather than shown with a lower confidence label.
+
+**Low effort entries are marked, not hidden.** On a difficult day a patient can switch on a comfort mode that, among other things, lets them record a check in as "nothing unusual" in one tap, which records each domain at that patient's own baseline. These entries are flagged as such, count towards coverage because they are genuine data points, and cap the confidence of any pattern they contribute to at partial. The report states how many entries were made this way.
 
 **Instability is treated as a finding in its own right**, not as noise around a mean. Instability in negative affect predicts depressive and generalised anxiety symptoms even after controlling for the intensity of that affect, meaning the fluctuation itself carries information the average does not [12]. In bipolar disorder, mood instability metrics derived from repeated sampling stratify individuals and track outcomes independently of episode based measures [13]. In ADHD, a systematic review of momentary sampling studies found emotion dysregulation to be reliably observable as within day fluctuation and related to functional impairment, in a way that trait level questionnaire ratings do not capture [14].
 

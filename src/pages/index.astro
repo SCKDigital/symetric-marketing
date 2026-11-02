@@ -82,12 +82,18 @@ const screenshots = [
   { label: "Prepare", sub: "Questions drafted before an appointment", cap: "Drafted from what it actually found." },
 ];
 
+// The report's sections in the order the app prints them (symetric-native
+// src/lib/report/generate-report.ts). Numbered as sections, not pages: chart
+// pages repeat as needed and body pages only appear if body is tracked, so the
+// page count varies from one person's report to the next.
 const reportPages = [
-  { num: "PAGE 1", title: "Executive summary", c: "var(--mood)" },
-  { num: "PAGE 2", title: "Mind overview", c: "var(--anxiety)" },
-  { num: "PAGE 3", title: "Body overview", c: "var(--concentration)" },
-  { num: "PAGE 4", title: "Context & connections", c: "var(--energy)" },
-  { num: "PAGE 5", title: "Data quality & methodology", c: "var(--mood)" },
+  { num: "01", title: "Executive summary", c: "var(--mood)" },
+  { num: "02", title: "Domain summary", c: "var(--energy)" },
+  { num: "03", title: "Mind overview & charts", c: "var(--anxiety)" },
+  { num: "04", title: "Sleep", c: "var(--concentration)" },
+  { num: "05", title: "Body overview & charts", c: "var(--mood)" },
+  { num: "06", title: "Context & connections", c: "var(--energy)" },
+  { num: "07", title: "Data quality & methodology", c: "var(--anxiety)" },
 ];
 ---
 
@@ -111,13 +117,13 @@ const reportPages = [
             <a class="btn btn-primary" href="#">Get symetric</a>
             <a class="btn btn-ghost" href="#report">Read a real report first</a>
           </div>
-          <p class="hero-finer">No ads &middot; no subscription</p>
+          <p class="hero-finer">Australia only for now &middot; no ads &middot; no subscription</p>
         </div>
 
         <div class="hero-visual">
           <div class="checkin-wrap">
             <div class="checkin-head">
-              <span>90 days &middot; 4 check-ins a day</span>
+              <span>90 days &middot; 3 check-ins a day</span>
               <span>One cell for every day</span>
             </div>
             <div
@@ -152,6 +158,22 @@ const reportPages = [
     </section>
   </div>
 
+  <!-- ============ WHO IT'S FOR ============ -->
+  <div class="shell" id="clinician">
+    <section class="sec pt-tight" aria-labelledby="who-h">
+      <h2 id="who-h">You don&rsquo;t need a diagnosis to use this.</h2>
+      <p class="mt-lg muted">POTS. EDS. MCAS. ME/CFS. Autism. ADHD. Anxiety and depression that don&rsquo;t respond the way they&rsquo;re &ldquo;supposed&rdquo; to. Often two or three at once, tangled together.</p>
+      <p class="mt-md muted"><b>symetric doesn&rsquo;t diagnose, and you don&rsquo;t need a diagnosis to start.</b> Only data. Never assumptions.</p>
+      <div class="who-tags">
+        <span class="who-tag">No diagnosis needed</span>
+        <span class="who-tag">On a waiting list</span>
+        <span class="who-tag">Between clinicians</span>
+        <span class="who-tag">Told it&rsquo;s &ldquo;probably nothing&rdquo;</span>
+      </div>
+      <div class="cta-row mt-md"><a class="btn btn-ghost" href="/for-clinicians">For clinicians</a></div>
+    </section>
+  </div>
+
   <!-- ============ WHAT IT ASKS OF YOU ============ -->
   <div class="shell">
     <section class="sec" aria-labelledby="asks-h">
@@ -167,7 +189,7 @@ const reportPages = [
         </div>
         <div class="card" style="--c:var(--anxiety)">
           <h3>Missing a check-in costs nothing</h3>
-          <p>No streak to break. <b>A rough fortnight won&rsquo;t be punished</b>, and the gap itself is data worth having.</p>
+          <p>No streak to break. <b>A rough fortnight won&rsquo;t be punished</b>, and the gap itself is data worth having. On a bad day, comfort mode quietens the screen and lets you log &ldquo;nothing unusual&rdquo; in one tap.</p>
         </div>
       </div>
     </section>
@@ -198,7 +220,7 @@ const reportPages = [
     <section class="sec pt-tight" aria-labelledby="vitals-h">
       <p class="sec-label">What week six actually looks like</p>
       <h2 id="vitals-h">Four numbers, not a diagnosis.</h2>
-      <p class="mt-lg muted">A real week: where each area sits right now, which way it&rsquo;s moved. Nothing here is a score to fix, just a record to bring somewhere.</p>
+      <p class="mt-lg muted">A real week: where each area sits right now, and which way it&rsquo;s moved. Up isn&rsquo;t good and down isn&rsquo;t bad, it depends entirely on the area, and none of them are targets to hit. It&rsquo;s a record to bring somewhere, not a scoreboard.</p>
       <div class="vitals" role="img" aria-label={`Four tracked areas, this week. ${vitalsSummary}.`}>
         {vitals.map((row) => (
           <div class="vitals-row">
@@ -223,7 +245,7 @@ const reportPages = [
     <section class="report" aria-labelledby="report-h">
       <p class="sec-label">The part that matters</p>
       <h2 id="report-h">Read a real report before you install anything.</h2>
-      <p class="mt-lg">Five pages, built from three months of sample data: executive summary, mind overview, body overview, context and connections, data quality.</p>
+      <p class="mt-lg">One landscape PDF, built from three months of sample data: an executive summary, every domain against its own baseline, mind, sleep and body, what moves with what, and how complete the record is.</p>
 
       <div class="finding" role="img" aria-label="Anxiety over the last eight weeks, with one finding flagged: anxiety rises the day after poor sleep, based on eight weeks of data, rated solid.">
         <div class="finding-chart">
@@ -262,8 +284,8 @@ const reportPages = [
 
       <div class="cta-row mt-2xl">
         <a class="btn btn-light" href="/symetric-sample-report.pdf">Download the report</a>
-        <a class="btn ui" style="color:#EDEEF2;border-color:var(--rule-on-dark)" href="/for-clinicians">For clinicians</a>
-        <span class="cta-note" style="color:var(--mute-on-dark)">PDF &middot; 5 pages</span>
+        <a class="btn ui" style="color:#E2E8F0;border-color:var(--rule-on-dark)" href="/for-clinicians">For clinicians</a>
+        <span class="cta-note" style="color:var(--mute-on-dark)">PDF &middot; landscape</span>
       </div>
     </section>
   </div>
@@ -299,6 +321,10 @@ const reportPages = [
       <div class="plain">
         <div class="line">
           <span class="tick yes" aria-hidden="true">✓</span>
+          <span class="txt"><b>Named staff can access your entries for support, technical or security reasons.</b> Every one of those accesses is logged. That&rsquo;s the honest limit, and it&rsquo;s the part most apps leave out.</span>
+        </div>
+        <div class="line">
+          <span class="tick yes" aria-hidden="true">✓</span>
           <span class="txt"><b>Stored in your own encrypted account.</b> No other user, no unauthenticated request, can reach it.</span>
         </div>
         <div class="line">
@@ -321,19 +347,15 @@ const reportPages = [
     </section>
   </div>
 
-  <!-- ============ WHO IT'S FOR ============ -->
-  <div class="shell" id="clinician">
-    <section class="sec pt-tight" aria-labelledby="who-h">
-      <h2 id="who-h">You don&rsquo;t need a diagnosis to use this.</h2>
-      <p class="mt-lg muted">POTS. EDS. MCAS. ME/CFS. Autism. ADHD. Anxiety and depression that don&rsquo;t respond the way they&rsquo;re &ldquo;supposed&rdquo; to. Often two or three at once, tangled together.</p>
-      <p class="mt-md muted"><b>symetric doesn&rsquo;t diagnose, and you don&rsquo;t need a diagnosis to start.</b> Only data. Never assumptions.</p>
-      <div class="who-tags">
-        <span class="who-tag">No diagnosis needed</span>
-        <span class="who-tag">On a waiting list</span>
-        <span class="who-tag">Between clinicians</span>
-        <span class="who-tag">Told it&rsquo;s &ldquo;probably nothing&rdquo;</span>
+  <!-- ============ WHO BUILT IT ============ -->
+  <div class="shell">
+    <section class="sec pt-tight" aria-labelledby="who-built-h">
+      <p class="sec-label">Who built it</p>
+      <h2 id="who-built-h">One person, with the same problem.</h2>
+      <div class="cycle-callout mt-xl">
+        <p>symetric started in February 2026 because I knew there was more going on with me than just &ldquo;anxiety&rdquo;, and none of it felt describable in a fifteen minute appointment. So I built what I needed.</p>
+        <p class="mt-md">I&rsquo;ve used it myself every day since, which is where most of the design decisions came from. It isn&rsquo;t a company, there&rsquo;s no funding, and there&rsquo;s no clinical trial behind it yet. <a href="/about">The full story, including what happens if it ever shuts down</a>.</p>
       </div>
-      <div class="cta-row mt-md"><a class="btn btn-ghost" href="/for-clinicians">For clinicians</a></div>
     </section>
   </div>
 
@@ -347,6 +369,7 @@ const reportPages = [
         <a class="btn btn-ghost" href="#report">Read the sample report</a>
       </div>
       <p class="cta-note mt-md">Australia only for now &middot; Android and iOS &middot; AU$9.99 once, no ads, no subscription</p>
+      <p class="cta-note mt-sm">Roughly what other trackers charge for a single month. You pay it once.</p>
     </section>
   </div>
 
