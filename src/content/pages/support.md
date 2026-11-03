@@ -6,11 +6,13 @@ label: Help & contact
 
 ## Get in touch
 
-<!-- TODO: form has no real submission endpoint yet. Needs one wired up
-     (a Supabase table matching the app's own backend, or a service like
-     Formspree) before this can go live. Static site, no server routes. -->
+<!-- Posts to the app backend's site-forms function (mosaic-app repo), which
+     stores the message, emails it to support@symetric.app and redirects to
+     /thanks/message. -->
 
-<form class="contact-form" method="post" action="#">
+<form class="contact-form" method="post" action="https://ovfnewvetuimfqitswdk.supabase.co/functions/v1/site-forms">
+  <input type="hidden" name="form" value="contact" />
+  <div class="hp" aria-hidden="true"><label>Company <input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
   <div class="contact-field">
     <label for="contact-email">Your email</label>
     <input type="email" id="contact-email" name="email" placeholder="you@example.com" required />

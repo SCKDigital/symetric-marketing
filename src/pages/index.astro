@@ -217,10 +217,11 @@ const dataIcons = [
         <a class="btn btn-ghost" href="#demo">{c.closing.demoLabel}</a>
       </div>
       <p class="eyebrow" style="margin-top:56px">{c.closing.waitlistLabel}</p>
-      <!-- TODO: form has no real submission endpoint yet. Needs one wired up
-           (a Supabase table matching the app's own backend, or a service like
-           Formspree) before this can go live. Static site, no server routes. -->
-      <form class="waitlist-form" method="post" action="#">
+      <!-- Posts to the app backend's site-forms function (mosaic-app repo),
+           which stores the address and redirects to /thanks/waitlist. -->
+      <form class="waitlist-form" method="post" action="https://ovfnewvetuimfqitswdk.supabase.co/functions/v1/site-forms">
+        <input type="hidden" name="form" value="waitlist" />
+        <div class="hp" aria-hidden="true"><label>Company <input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
         <label for="waitlist-email" class="sr-only">Email address</label>
         <input type="email" id="waitlist-email" name="email" placeholder="you@example.com" required />
         <button type="submit" class="btn btn-primary">{c.closing.waitlistButton}</button>

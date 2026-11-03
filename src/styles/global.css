@@ -563,6 +563,9 @@ footer { border-top: 1px solid var(--rule); margin-top: 72px; padding: 48px 0 72
 .contact-field textarea { resize: vertical; min-height: 120px; }
 .contact-form .btn { align-self: flex-start; }
 
+/* honeypot field on both forms: off-screen for people, still filled in by bots */
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
 /* what it tracks: always on / optional */
 .tier { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 0; border-bottom: 1px solid var(--rule); }
 .tier:last-child { border-bottom: 0; }
