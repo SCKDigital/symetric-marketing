@@ -6,7 +6,7 @@ label: Help & contact
 
 ## Get in touch
 
-<!-- Posts to the app backend's site-forms function (mosaic-app repo), which
+<!-- Posts to the app backend's site-forms function (symetric-native repo, supabase/functions/site-forms), which
      stores the message, emails it to support@symetric.app and redirects to
      /thanks/message. -->
 
