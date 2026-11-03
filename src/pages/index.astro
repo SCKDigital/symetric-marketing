@@ -20,6 +20,10 @@ const factAcc = ["acc-mood", "acc-sensory", "acc-social", "acc-motivation"];
 const getsAcc = ["acc-energy", "acc-concentration", "acc-motivation"];
 const pick = (list: string[], i: number) => list[i % list.length];
 
+// The demo is symetric-native built for web (its docs/web-demo.md), deployed
+// as its own Vercel project. Change this if it moves to a custom domain.
+const DEMO_URL = "https://symetric-demo.vercel.app";
+
 const icon = (d: string) =>
   `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 const factIcons = [
@@ -61,9 +65,10 @@ const dataIcons = [
         <div class="phone">
           <img src="/demo-poster.webp" alt="The Symetric Today screen: sleep logged, the next mind check-in at 2:40 pm, and the body check-in opening at 6 pm." width="600" height="1365" />
           <div class="phone-cta">
-            <!-- TODO: point at the web demo build (symetric-native, web-demo
-                 branch) once it is deployed. Until then this is a still image. -->
-            <a class="btn" href="#demo">
+            <!-- On a wide screen the script below swaps the poster for the app
+                 in this phone. On a narrow one, or without JS, the link opens
+                 the full-screen demo page instead. -->
+            <a class="btn" href={`${DEMO_URL}/demo`} data-demo-start>
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"></path></svg>
               {c.demo.buttonLabel}
             </a>
@@ -224,3 +229,35 @@ const dataIcons = [
 
   </div>
 </BaseLayout>
+
+<script>
+  // The app is laid out for a 390pt-wide phone. Rendered at that width and
+  // scaled down to the frame, it looks like the poster it replaces; the frame
+  // keeps the poster's size, so nothing on the page moves.
+  const APP_WIDTH = 390;
+  const start = document.querySelector<HTMLAnchorElement>("[data-demo-start]");
+  const phone = start?.closest<HTMLElement>(".phone");
+  const poster = phone?.querySelector("img");
+
+  start?.addEventListener("click", (e) => {
+    if (!phone || !poster || window.innerWidth < 600) return;
+    e.preventDefault();
+    const frame = document.createElement("iframe");
+    frame.className = "phone-app";
+    frame.title = "Symetric demo";
+    frame.src = new URL("/", start.href).href;
+    const fit = () => {
+      const scale = poster.clientWidth / APP_WIDTH;
+      frame.style.width = `${APP_WIDTH}px`;
+      frame.style.height = `${poster.clientHeight / scale}px`;
+      frame.style.transform = `scale(${scale})`;
+    };
+    fit();
+    new ResizeObserver(fit).observe(poster);
+    phone.append(frame);
+    phone.classList.add("is-live");
+    // The button sits mid-phone, so the tab bar can be below the fold.
+    phone.scrollIntoView({ block: "center", behavior: "smooth" });
+    frame.addEventListener("load", () => frame.focus(), { once: true });
+  });
+</script>
