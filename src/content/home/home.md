@@ -19,7 +19,7 @@ insights:
     text: '==Sensory overwhelm== averages 5.3 on Wednesdays, against 3.5 on other days.'
     colour: sensory
   - label: What follows a poor night
-    text: 'Next day, ==concentration== runs 2.8 points lower and **energy** 2.1 lower.'
+    text: 'Next day, ==concentration== runs 2.9 points lower and **energy** 2.2 lower.'
     colour: concentration
 demo:
   buttonLabel: Start the demo
