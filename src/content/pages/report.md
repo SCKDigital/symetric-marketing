@@ -6,9 +6,17 @@ label: "No email, no sign-up"
 
 You hand over a dated record instead of trying to remember. The appointment starts from what actually happened over three months, not from how you're feeling in the room that morning, and you don't have to be your own witness for it. Everything else symetric does, the check-ins, the domains you picked, the quiet weeks, exists to build towards that.
 
-This sample is built from three months of made-up data, not a real person's, so you can see exactly what the report looks like and decide if it's worth your time before you install anything. [Download it directly](/symetric-sample-report.pdf). No email address, no account, no sign-up.
+This sample is built from three months of made-up data, not a real person's, so you can see exactly what the report looks like and decide if it's worth your time before you install anything. [Download the full report](/symetric-sample-report.pdf) or [the basic one](/symetric-sample-report-basic.pdf). No email address, no account, no sign-up.
 
-## What's in it
+## Two versions
+
+When you make a report you choose how much goes in it.
+
+**Basic** is the default: a summary on at most five pages. One page covers the patterns with the most data behind them, what you want to discuss and what changed in the period. Then come your mind charts and patterns, and your body charts and patterns if you track body. Anything that didn't fit is counted, with a note that it's in the comprehensive report. It suits a short appointment, or a clinician seeing it for the first time.
+
+**Comprehensive** sets out everything: every pattern, every event, sleep, symptom descriptions, cycle Day 1, data quality and the method. Aisha's runs to 20 pages. The rest of this page describes it.
+
+## What's in the comprehensive report
 
 The report is landscape, and its length depends on what you track: a chart page for every few domains, and the body pages only if body tracking is on. The sections always come in this order.
 
@@ -83,6 +91,7 @@ The report is landscape, and its length depends on what you track: a chart page 
 The report describes what you logged. It doesn't diagnose anything, and it doesn't tell you or your clinician what to do next. <b>It's a record, not a recommendation.</b>
 
 <div class="cta-row mt-2xl">
-  <a class="btn btn-primary" href="/symetric-sample-report.pdf">Download the sample report</a>
+  <a class="btn btn-primary" href="/symetric-sample-report.pdf">Download the comprehensive report</a>
+  <a class="btn btn-ghost" href="/symetric-sample-report-basic.pdf">Download the basic report</a>
   <a class="btn btn-ghost" href="/for-clinicians">For clinicians</a>
 </div>

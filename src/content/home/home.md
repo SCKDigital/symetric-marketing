@@ -16,10 +16,10 @@ insights:
     text: Your **gut** and your ==anxiety== tend to rise and fall together.
     colour: anxiety
   - label: Day of the week
-    text: '==Sensory overwhelm== averages 5.2 on Wednesdays, against 3.5 on other days.'
+    text: '==Sensory overwhelm== averages 5.3 on Wednesdays, against 3.5 on other days.'
     colour: sensory
   - label: What follows a poor night
-    text: 'Next day, **fatigue** runs 3.1 points higher and ==concentration== 2.8 lower.'
+    text: 'Next day, ==concentration== runs 2.8 points lower and **energy** 2.1 lower.'
     colour: concentration
 demo:
   buttonLabel: Start the demo
@@ -51,7 +51,7 @@ gets:
 report:
   eyebrow: See it before you install it
   heading: The report your clinician actually gets.
-  text: Twelve pages built by the app from Aisha’s 90 days of sample check-ins. Every pattern in it was found by the same code that runs on your phone.
+  text: 'Built by the app from Aisha’s 90 days of sample check-ins, in both versions you can choose: a five-page summary, or the full report with every entry. Every pattern in them was found by the same code that runs on your phone.'
   chips:
     - Executive summary
     - Mind and body charts
@@ -59,7 +59,7 @@ report:
     - What moves with what
     - Data quality
   buttonLabel: Open the sample report
-  fine: 'PDF · 12 pages · no email, no sign-up · [for clinicians](/for-clinicians)'
+  fine: 'PDF · 20 pages · or the [5-page basic report](/symetric-sample-report-basic.pdf) · no email, no sign-up · [for clinicians](/for-clinicians)'
 who:
   eyebrow: Built for bodies that don’t fit one label
   heading: You don’t need a diagnosis to use this.
