@@ -2,23 +2,23 @@
 import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { inline } from "../lib/inline";
+import six from "../data/first-six-weeks.json";
 
-// The words are in src/content/home/home.md (edited in Tina). Layout, icons
-// and section colours stay here, so an edit can't break the design.
+// The words are in src/content/home/home.md (edited in Tina). Layout and icons
+// stay here, so an edit can't break the design.
+//
+// Colour on this page means one thing: a mind domain. Only the three findings
+// around the demo and the six-weeks chart carry one. Everything else is the
+// neutral --brand, and no section has a small label above its heading.
 //
 // The three findings around the demo are real: each is in the sample report
 // (public/symetric-sample-report.pdf, built by symetric-native's
 // scripts/sample-report from Aisha's data). If the report is rebuilt and a
-// figure moves, change it in home.md too.
+// figure moves, change it in home.md too, and rerun
+// scripts/first-six-weeks.mjs, which writes the chart's data.
 const entry = await getEntry("home", "home");
 if (!entry) throw new Error("src/content/home/home.md is missing");
 const c = entry.data;
-
-// Colours cycle through the mind domains so none leads, whatever the count.
-const trustAcc = ["acc-anxiety", "acc-concentration", "acc-irritability"];
-const factAcc = ["acc-mood", "acc-sensory", "acc-social", "acc-motivation"];
-const getsAcc = ["acc-energy", "acc-concentration", "acc-motivation"];
-const pick = (list: string[], i: number) => list[i % list.length];
 
 // The demo is symetric-native built for web (its docs/web-demo.md), deployed
 // as its own Vercel project. Change this if it moves to a custom domain.
@@ -26,6 +26,7 @@ const DEMO_URL = "https://symetric-demo.vercel.app";
 
 const icon = (d: string) =>
   `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const pick = (list: string[], i: number) => list[i % list.length];
 const factIcons = [
   icon('<rect x="6" y="2" width="12" height="20" rx="3"></rect><path d="M11 18h2"></path>'),
   icon('<circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path>'),
@@ -37,14 +38,28 @@ const dataIcons = [
   icon('<circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path>'),
   icon('<path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M5 21h14"></path>'),
 ];
+
+// ---- The first six weeks, drawn from Aisha's check-ins ----
+// Across: 42 days, with a sliver kept on the right for the appointment line.
+// Up: one point of headroom either side of the scores she actually gave.
+const dots = six.dots as [number, number, number][];
+const scores = dots.map((d) => d[1]);
+const lo = Math.min(...scores) - 1;
+const hi = Math.max(...scores) + 1;
+const SPAN = six.days + 1.5;
+const pct = (n: number) => `${Math.round(n * 100) / 100}%`;
+const x = (t: number) => pct((t / SPAN) * 100);
+const y = (score: number) => pct((1 - (score - lo) / (hi - lo)) * 100);
+const weekLabels = Array.from({ length: six.days / 7 }, (_, i) => `Week ${i + 1}`);
+const p = six.pattern;
+const finding = `${p.dayName}s average ${p.standoutAvg}, against ${p.comparisonAvg} on other days · ${p.consistentWeeks} of ${p.weekCount} weeks`;
 ---
 
 <BaseLayout title={c.seoTitle} description={c.seoDescription} structuredData>
   <div class="shell">
 
     <!-- ============ HERO, demo first ============ -->
-    <section class="hero acc-energy" aria-labelledby="hero-h">
-      <p class="eyebrow">{c.hero.eyebrow}</p>
+    <section class="hero" aria-labelledby="hero-h">
       <h1 id="hero-h">{c.hero.heading}</h1>
       <p class="lede" set:html={inline(c.hero.lede)} />
       <div class="cta-row">
@@ -52,7 +67,7 @@ const dataIcons = [
         <a class="btn btn-ghost" href="#report">{c.hero.reportLabel}</a>
       </div>
       <div class="trust">
-        {c.hero.trust.map((t, i) => <span class={pick(trustAcc, i)}><i class="dot"></i>{t}</span>)}
+        {c.hero.trust.map((t) => <span><i class="dot"></i>{t}</span>)}
       </div>
 
       <div class="stage" id="demo">
@@ -76,40 +91,24 @@ const dataIcons = [
           </div>
         </div>
       </div>
-      <div class="steps" aria-label="What the guided tour covers">
-        {c.demo.steps.map((s, i) => <span class="step"><b>{i + 1}</b>{s}</span>)}
-      </div>
     </section>
 
     <!-- ============ FACTS ============ -->
     <section class="facts grid-4" aria-label="At a glance">
       {c.facts.map((f, i) => (
-        <div class={`fact ${pick(factAcc, i)}`}>
+        <div class="fact">
           <Fragment set:html={pick(factIcons, i)} />
           <p><b>{f.title}</b>{f.text}</p>
         </div>
       ))}
     </section>
 
-    <!-- ============ WHAT YOU GET ============ -->
-    <section class="sec acc-irritability" id="how" aria-labelledby="gets-h">
-      <p class="eyebrow">{c.gets.eyebrow}</p>
-      <h2 id="gets-h" style="max-width:18em">{c.gets.heading}</h2>
-      <div class="grid-3 swipe" style="margin-top:32px">
-        {c.gets.cards.map((g, i) => (
-          <div class={`card ${pick(getsAcc, i)}`}><i class="mark"></i><h3>{g.title}</h3><p set:html={inline(g.text)} /></div>
-        ))}
-      </div>
-    </section>
-
     <!-- ============ SAMPLE REPORT ============ -->
-    <section class="panel acc-anxiety" id="report" aria-labelledby="report-h" style="margin-top:96px">
+    <section class="panel" id="report" aria-labelledby="report-h" style="margin-top:96px">
       <div class="split">
         <div>
-          <p class="eyebrow">{c.report.eyebrow}</p>
-          <h2 id="report-h">{c.report.heading}</h2>
+          <h2 id="report-h" style="margin-top:0">{c.report.heading}</h2>
           <p class="muted" style="margin-top:16px;font-size:18px" set:html={inline(c.report.text)} />
-          <div class="chips">{c.report.chips.map((ch) => <span class="chip">{ch}</span>)}</div>
           <div class="cta-row">
             <a class="btn btn-primary" href="/symetric-sample-report.pdf">{c.report.buttonLabel}</a>
           </div>
@@ -126,22 +125,42 @@ const dataIcons = [
   </div>
 
   <!-- ============ WHO IT'S FOR, and the first six weeks ============ -->
-  <section class="band acc-social" style="text-align:center" aria-labelledby="who-h">
+  <section class="band" style="text-align:center" aria-labelledby="who-h">
     <div class="shell">
-      <p class="eyebrow">{c.who.eyebrow}</p>
-      <h2 id="who-h" style="max-width:16em;margin-left:auto;margin-right:auto">{c.who.heading}</h2>
+      <h2 id="who-h" style="max-width:16em;margin:0 auto">{c.who.heading}</h2>
       <p class="muted" style="font-size:20px;line-height:1.5;max-width:34em;margin:20px auto 0" set:html={inline(c.who.text)} />
-      <div class="grid-4 swipe" style="margin-top:48px;text-align:left" id="weeks">
-        {c.who.weeks.map((w) => (
-          <div class="card week">
-            <small>{w.when}</small>
-            <b>{w.lead}</b>
-            <p>{w.rest}</p>
-            <div class="meter" aria-hidden="true">
-              {Array.from({ length: 6 }).map((_, i) => <i class={i < w.filled ? "on" : ""}></i>)}
-            </div>
+
+      <!-- Aisha's first 42 days of one domain. Without JS (or before it runs)
+           this is the finished picture; the script at the bottom of the page
+           then empties it and fills it back in as the page scrolls. The four
+           captions are buttons that step the chart to their week. -->
+      <div class="record" id="weeks" data-record data-days={six.days} data-baseline-day={six.baseline.day}>
+        <div class="card record-chart acc-sensory">
+          <div class="record-head">
+            <b>{six.label}</b>
+            <span>Sample data · one dot per check-in · {six.answered} of {six.scheduled} answered</span>
           </div>
-        ))}
+          <p class="record-found">{finding}</p>
+          <div class="plot" role="img" aria-label={`${six.days} days of sample check-ins for ${six.label.toLowerCase()}. A baseline of ${six.baseline.score} appears in week three. By week six: ${finding}.`}>
+            <div class="baseline" style={`top:${y(six.baseline.score + 0.5)};bottom:calc(100% - ${y(six.baseline.score - 0.5)})`}><span>Your baseline</span></div>
+            {dots.map(([t, score, standout]) => (
+              <i class={standout ? "pt standout" : "pt"} data-t={t} style={`left:${x(t)};top:${y(score)}`}></i>
+            ))}
+            <div class="appt"><span>Your appointment</span></div>
+          </div>
+          <div class="axis" aria-hidden="true" style={`width:${pct((six.days / SPAN) * 100)}`}>
+            {weekLabels.map((w) => <span>{w}</span>)}
+          </div>
+        </div>
+        <div class="grid-4 swipe record-stages">
+          {c.who.weeks.map((w, i) => (
+            <button type="button" class="card week" data-stage={i}>
+              <small>{w.when}</small>
+              <b>{w.lead}</b>
+              <span>{w.rest}</span>
+            </button>
+          ))}
+        </div>
       </div>
       <p style="margin-top:28px"><a href="/first-six-weeks">{c.who.linkText}</a></p>
     </div>
@@ -150,9 +169,8 @@ const dataIcons = [
   <div class="shell">
 
     <!-- ============ YOUR DATA ============ -->
-    <section class="panel acc-sensory" id="data" aria-labelledby="data-h" style="margin-top:96px">
-      <p class="eyebrow">{c.data.eyebrow}</p>
-      <h2 id="data-h" style="max-width:18em">{c.data.heading}</h2>
+    <section class="panel" id="data" aria-labelledby="data-h" style="margin-top:96px">
+      <h2 id="data-h" style="max-width:18em;margin-top:0">{c.data.heading}</h2>
       <div class="grid-3 swipe" style="margin-top:32px">
         {c.data.cards.map((d, i) => (
           <div class="card"><span class="iconwrap" set:html={pick(dataIcons, i)} /><h3 style="font-size:18px">{d.title}</h3><p set:html={inline(d.text)} /></div>
@@ -162,11 +180,10 @@ const dataIcons = [
     </section>
 
     <!-- ============ PRICE ============ -->
-    <section class="sec acc-mood" id="get" aria-labelledby="price-h">
+    <section class="sec" id="get" aria-labelledby="price-h">
       <div class="grid-2" style="gap:56px;align-items:center">
         <div>
-          <p class="eyebrow">{c.price.eyebrow}</p>
-          <h2 id="price-h">{c.price.heading}</h2>
+          <h2 id="price-h" style="margin-top:0">{c.price.heading}</h2>
           <p class="muted" style="margin-top:14px;font-size:18px" set:html={inline(c.price.text)} />
         </div>
         <div class="card price" style="padding:40px;border-radius:28px">
@@ -187,10 +204,9 @@ const dataIcons = [
     </section>
 
     <!-- ============ FAQ ============ -->
-    <section class="sec acc-concentration" id="faq" aria-labelledby="faq-h">
+    <section class="sec" id="faq" aria-labelledby="faq-h">
       <div class="faq">
-        <p class="eyebrow" style="text-align:center">{c.faq.eyebrow}</p>
-        <h2 id="faq-h" style="text-align:center">{c.faq.heading}</h2>
+        <h2 id="faq-h" style="text-align:center;margin-top:0">{c.faq.heading}</h2>
         <div style="margin-top:28px">
           {c.faq.items.map((f) => (
             <details><summary>{f.q}</summary><p set:html={inline(f.a)} /></details>
@@ -200,23 +216,22 @@ const dataIcons = [
     </section>
 
     <!-- ============ WHO BUILT IT ============ -->
-    <section class="sec acc-anxiety" aria-labelledby="founder-h">
+    <section class="sec" aria-labelledby="founder-h">
       <div class="card" style="padding:44px;border-radius:28px;max-width:860px">
-        <p class="eyebrow">{c.founder.eyebrow}</p>
-        <h2 id="founder-h">{c.founder.heading}</h2>
+        <h2 id="founder-h" style="margin-top:0">{c.founder.heading}</h2>
         <p class="muted" style="margin-top:16px;font-size:18px" set:html={inline(c.founder.text)} />
         <p style="margin-top:18px;font-weight:600"><a href="/about">{c.founder.linkText}</a></p>
       </div>
     </section>
 
     <!-- ============ CLOSE AND WAITLIST ============ -->
-    <section class="closing acc-motivation" aria-labelledby="close-h">
-      <h2 id="close-h">{c.closing.heading}</h2>
+    <section class="closing" aria-labelledby="close-h">
+      <h2 id="close-h" style="margin-top:0">{c.closing.heading}</h2>
       <div class="cta-row">
         <a class="btn btn-primary" href="#get">{c.closing.getLabel}</a>
         <a class="btn btn-ghost" href="#demo">{c.closing.demoLabel}</a>
       </div>
-      <p class="eyebrow" style="margin-top:56px">{c.closing.waitlistLabel}</p>
+      <p class="waitlist-label">{c.closing.waitlistLabel}</p>
       <!-- Posts to the app backend's site-forms function (symetric-native repo, supabase/functions/site-forms),
            which stores the address and redirects to /thanks/waitlist. -->
       <form class="waitlist-form" method="post" action="https://ovfnewvetuimfqitswdk.supabase.co/functions/v1/site-forms">
@@ -261,4 +276,87 @@ const dataIcons = [
     phone.scrollIntoView({ block: "center", behavior: "smooth" });
     frame.addEventListener("load", () => frame.focus(), { once: true });
   });
+
+  // ---- The first six weeks ----
+  // Progress runs 0 to 1. The first FILL of it lays down the 42 days of dots;
+  // the rest brings in the appointment line. Scrolling only ever moves it
+  // forward, so the chart never empties again as someone scrolls back up; the
+  // four captions can step it to any week. The states themselves are CSS
+  // (global.css, "the first six weeks"): this only sets classes.
+  const FILL = 0.9;
+  const record = document.querySelector<HTMLElement>("[data-record]");
+  const stages = record ? [...record.querySelectorAll<HTMLButtonElement>("[data-stage]")] : [];
+
+  if (record && stages.length === 4) {
+    const chart = record.querySelector<HTMLElement>(".record-chart")!;
+    const days = Number(record.dataset.days);
+    const baselineDay = Number(record.dataset.baselineDay);
+    const points = [...record.querySelectorAll<HTMLElement>(".pt")].map((el) => ({ el, t: Number(el.dataset.t) }));
+    // Where each caption takes the chart: the end of week 1, of week 3, of week 6, and the appointment.
+    const targets = [(7 / days) * FILL, (21 / days) * FILL, FILL, 1];
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let progress = still ? 1 : 0;
+    let frame = 0;
+
+    const draw = () => {
+      const day = Math.min(days, (progress / FILL) * days);
+      for (const pt of points) pt.el.classList.toggle("on", pt.t <= day);
+      record.classList.toggle("has-baseline", day >= baselineDay);
+      record.classList.toggle("has-pattern", day >= days);
+      record.classList.toggle("has-appointment", progress >= 0.97);
+      const active = progress >= 0.97 ? 3 : day >= days ? 2 : day >= baselineDay ? 1 : 0;
+      stages.forEach((b, i) => {
+        b.classList.toggle("is-on", i === active);
+        b.setAttribute("aria-pressed", String(i === active));
+      });
+    };
+
+    const glideTo = (target: number) => {
+      cancelAnimationFrame(frame);
+      if (still) {
+        progress = target;
+        draw();
+        return;
+      }
+      const from = progress;
+      const began = performance.now();
+      const step = (now: number) => {
+        const k = Math.min(1, (now - began) / 1400);
+        progress = from + (target - from) * (1 - Math.pow(1 - k, 3));
+        draw();
+        if (k < 1) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    };
+
+    stages.forEach((b, i) => b.addEventListener("click", () => glideTo(targets[i])));
+
+    record.classList.add("is-live");
+    draw();
+
+    if (!still) {
+      // Empty when the chart's top edge is 80% of the way down the window,
+      // complete by the time it has climbed to 20%.
+      let queued = false;
+      const follow = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        const scrolled = Math.max(0, Math.min(1, (0.8 * vh - chart.getBoundingClientRect().top) / (0.6 * vh)));
+        if (scrolled > progress) {
+          cancelAnimationFrame(frame);
+          progress = scrolled;
+          draw();
+        }
+      };
+      const onScroll = () => {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(follow);
+        }
+      };
+      addEventListener("scroll", onScroll, { passive: true });
+      addEventListener("resize", onScroll);
+      follow();
+    }
+  }
 </script>

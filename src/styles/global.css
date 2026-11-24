@@ -39,9 +39,10 @@ a { color: var(--acc, var(--brand)); }
 }
 @media (max-width: 900px) { .shell { padding: 0 20px; } }
 
-/* ---------- section accent ----------
-   Each section borrows one mind-domain colour for its label, links, dots and
-   small marks. Set on the section; everything inside reads --acc. */
+/* ---------- accent ----------
+   Sets --acc to one mind-domain colour for everything inside. On the homepage
+   it is used only where the content is about that domain (the three findings
+   and the six-weeks chart); What it tracks still sets one per section. */
 .acc-mood { --acc: var(--mood); }
 .acc-energy { --acc: var(--energy); }
 .acc-anxiety { --acc: var(--anxiety); }
@@ -304,20 +305,23 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .float-3 { left: 30px; top: 470px; }
 /* The highlighted word in an insight card, in that card's domain colour. */
 .float .hl { color: var(--acc); }
-.steps { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 26px; }
-.step {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 9px 14px;
-  border-radius: 8px;
-  background: var(--card);
-  border: 1px solid var(--rule);
-  color: var(--ink-2);
+/* The three findings arrive one after another, once, as the page loads; the
+   domain word takes its colour last. Never loops. */
+@keyframes arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes tint { from { color: var(--ink); } to { color: var(--acc); } }
+.float { animation: arrive .7s var(--ease-out) both; }
+.float .hl { animation: tint .6s ease-out both; }
+.float-1 { animation-delay: .5s; }
+.float-1 .hl { animation-delay: 1.3s; }
+.float-2 { animation-delay: 1.5s; }
+.float-2 .hl { animation-delay: 2.3s; }
+.float-3 { animation-delay: 2.5s; }
+.float-3 .hl { animation-delay: 3.3s; }
+@media (prefers-reduced-motion: reduce) {
+  /* The blanket rule at the top shortens animations but keeps their delays,
+     which would leave the cards missing for the first seconds. */
+  .float, .float .hl { animation: none; }
 }
-.step b { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 10px; background: var(--fill); color: var(--on-fill); font-size: 11px; }
 @media (max-width: 900px) {
   .hero { padding-top: 28px; }
   .stage { margin-top: 36px; }
@@ -363,13 +367,57 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .panel .cta-row .btn { width: 100%; }
 }
 
-/* ---------- weeks ---------- */
+/* ---------- the first six weeks ----------
+   One domain of the sample data, a dot per check-in. As written here it is
+   the finished picture, which is what shows without JS. The script in
+   index.astro adds .is-live and then the classes below as the page scrolls:
+   .on per dot, then .has-baseline, .has-pattern and .has-appointment. */
+.record { margin-top: 48px; text-align: left; }
+.record-chart { padding: 28px 28px 20px; }
+.record-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+.record-head b { font-size: 18px; color: var(--acc); }
+.record-head span { font-size: 14px; color: var(--mute); }
+.record-chart .record-found { margin-top: 10px; font-size: 14px; font-weight: 600; color: var(--acc); transition: opacity .4s var(--ease-out); }
+.plot { position: relative; height: 240px; margin-top: 14px; border-bottom: 1px solid var(--rule); }
+.baseline { position: absolute; left: 0; right: 0; background: var(--band); border-top: 1px dashed var(--dot); border-bottom: 1px dashed var(--dot); transition: opacity .4s var(--ease-out); }
+/* Above the dots: on a phone a couple of them sit behind this label. */
+.baseline span { z-index: 1; position: absolute; right: 8px; bottom: 100%; margin-bottom: 5px; padding: 0 4px; background: var(--card); font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.pt {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  /* Once the pattern is found, the other days step back. */
+  background: color-mix(in srgb, var(--mute) 45%, var(--card));
+  transition: opacity .3s var(--ease-out), background-color .5s var(--ease-out);
+}
+.pt.standout { background: var(--acc); }
+.appt { position: absolute; right: 0; top: 0; bottom: 0; border-right: 2px solid var(--fill); transition: opacity .4s var(--ease-out); }
+.appt span { position: absolute; right: 10px; top: 0; font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.axis { display: flex; margin-top: 8px; font-size: 12px; color: var(--mute); }
+.axis span { flex: 1; }
+
+.record-stages { margin-top: 16px; }
+.week { font: inherit; color: var(--ink); text-align: left; transition: opacity .3s var(--ease-out), border-color .3s var(--ease-out); }
 .week small { display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
 .week b { display: block; font-size: 18px; margin: 8px 0 6px; }
-.week p { font-size: 15px; color: var(--ink-2); line-height: 1.5; }
-.meter { display: flex; gap: 3px; margin-top: 16px; }
-.meter i { flex: 1; height: 6px; border-radius: 3px; background: var(--rule); }
-.meter i.on { background: var(--acc, var(--brand)); }
+.week span { display: block; font-size: 15px; color: var(--ink-2); line-height: 1.5; }
+
+.record.is-live .pt:not(.on) { opacity: 0; }
+.record.is-live:not(.has-baseline) .baseline { opacity: 0; }
+.record.is-live:not(.has-pattern) .record-found { opacity: 0; }
+.record.is-live:not(.has-pattern) .pt { background: var(--ink-2); }
+.record.is-live:not(.has-appointment) .appt { opacity: 0; }
+.record.is-live .week { cursor: pointer; }
+.record.is-live .week:not(.is-on) { opacity: .55; }
+.record.is-live .week.is-on { border-color: var(--ink-2); }
+@media (max-width: 900px) {
+  .record { margin-top: 32px; }
+  .record-chart { padding: 20px 16px 14px; }
+  .plot { height: 180px; }
+  .pt { width: 6px; height: 6px; margin: -3px 0 0 -3px; }
+}
 
 /* ---------- icon card (your data) ---------- */
 .iconwrap { width: 40px; height: 40px; border-radius: 12px; background: var(--paper); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
@@ -410,6 +458,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .closing { text-align: center; padding: 120px 0 40px; }
 .closing h2 { max-width: 14em; margin-left: auto; margin-right: auto; }
 .closing .cta-row { justify-content: center; }
+.waitlist-label { margin-top: 56px; font-size: 16px; font-weight: 600; color: var(--ink-2); }
 .waitlist-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 460px; margin: 22px auto 0; }
 .waitlist-form input {
   flex: 1 1 220px;

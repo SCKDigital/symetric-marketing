@@ -80,7 +80,6 @@ export default defineConfig({
           str("seoTitle", "Browser tab title"),
           str("seoDescription", "Search engine description", { component: "textarea" }),
           group("hero", "Hero", [
-            str("eyebrow", "Small label"),
             str("heading", "Headline"),
             str("lede", "Intro", { component: "textarea" }, MARKS),
             str("tryLabel", "Demo button"),
@@ -109,45 +108,38 @@ export default defineConfig({
           group("demo", "Demo", [
             str("buttonLabel", "Start button"),
             str("note", "Note under the button", { component: "textarea" }),
-            { type: "string", name: "steps", label: "Tour steps", list: true },
           ]),
-          cards("facts", "At-a-glance facts", "Icons and colours follow the order."),
-          group("gets", "What you get", [str("eyebrow", "Small label"), str("heading", "Heading"), cards("cards", "Cards")]),
+          cards("facts", "At-a-glance facts", "Icons follow the order."),
           group("report", "Sample report", [
-            str("eyebrow", "Small label"),
             str("heading", "Heading"),
             str("text", "Text", { component: "textarea" }, MARKS),
-            { type: "string", name: "chips", label: "What's inside (tags)", list: true },
             str("buttonLabel", "Button"),
             str("fine", "Small print", {}, MARKS),
           ]),
           group("who", "Who it's for", [
-            str("eyebrow", "Small label"),
             str("heading", "Heading"),
             str("text", "Text", { component: "textarea" }, MARKS),
             {
               type: "object",
               name: "weeks",
-              label: "Week cards",
+              label: "Week captions under the six-weeks chart",
+              description: "Keep four, in this order: the chart steps through them.",
               list: true,
               ui: { itemProps: (i: any) => ({ label: i?.when }) },
               fields: [
                 str("when", "When"),
                 str("lead", "Headline"),
                 str("rest", "Text"),
-                { type: "number", name: "filled", label: "Bars filled (out of 6)", required: true },
               ],
             },
             str("linkText", "Link to The first six weeks"),
           ]),
           group("data", "Your data", [
-            str("eyebrow", "Small label"),
             str("heading", "Heading"),
             cards("cards", "Cards", "Icons follow the order: lock, person, download."),
             str("linkText", "Link to Your data"),
           ]),
           group("price", "Price", [
-            str("eyebrow", "Small label"),
             str("heading", "Heading"),
             str("text", "Text", { component: "textarea" }, MARKS),
             str("amount", "Price"),
@@ -155,7 +147,6 @@ export default defineConfig({
             { type: "string", name: "included", label: "What's included", list: true },
           ]),
           group("faq", "FAQ", [
-            str("eyebrow", "Small label"),
             str("heading", "Heading"),
             {
               type: "object",
@@ -167,7 +158,6 @@ export default defineConfig({
             },
           ]),
           group("founder", "Who built it", [
-            str("eyebrow", "Small label"),
             str("heading", "Heading"),
             str("text", "Text", { component: "textarea" }, MARKS),
             str("linkText", "Link to About"),
